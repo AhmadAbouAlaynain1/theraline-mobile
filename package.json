@@ -22,7 +22,9 @@
     "react-native": "0.70.5",
     "react-native-web": "~0.18.9",
     "zod": "^3.20.2",
-    "zustand": "^4.1.5"
+    "zustand": "^4.1.5",
+    "expo-notifications": "~0.17.0",
+    "expo-device": "~5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

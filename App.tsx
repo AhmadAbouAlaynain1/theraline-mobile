@@ -14,6 +14,8 @@ import {
 import { useAppState } from "./src/hooks/queries/AppQuery/useAppState";
 import { useOnlineManager } from "./src/hooks/queries/AppQuery/useOnlineManager";
 import { AppStateStatus } from "react-native";
+import { useNotification } from "./src/hooks/notifications/useNotification";
+import * as Notifications from "expo-notifications";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } },
@@ -26,7 +28,16 @@ function onAppStateChange(status: AppStateStatus) {
   }
 }
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 export default function App() {
+  useNotification();
   useOnlineManager();
   useAppState(onAppStateChange);
   return (
