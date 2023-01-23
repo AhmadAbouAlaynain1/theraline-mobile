@@ -49,7 +49,7 @@ accessClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const { status } = error.response;
-    if (status === 401 && refresh) {
+    if (status === 401 && useAuthStore.getState().refreshToken) {
       try {
         const newAccessToken = await refreshToken();
         setAccessToken(newAccessToken);

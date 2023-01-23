@@ -2,12 +2,11 @@ import useAuthStore from "../stores/useAuthStore";
 
 export const useAuth = () => {
   const {
-    accessToken,
-    refreshToken,
     setAccessToken,
     setRefreshToken,
     setUser,
-    user,
+
+    setIsAuthenticated,
   } = useAuthStore();
 
   const login = (email: string, password: string) => {
@@ -18,6 +17,7 @@ export const useAuth = () => {
     setAccessToken("");
     setRefreshToken("");
     setUser({});
+    setIsAuthenticated(false);
   };
 
   const register = (

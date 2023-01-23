@@ -16,10 +16,18 @@ import { useOnlineManager } from "./src/hooks/queries/AppQuery/useOnlineManager"
 import { AppStateStatus } from "react-native";
 import { useNotification } from "./src/hooks/notifications/useNotification";
 import * as Notifications from "expo-notifications";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Signin from "./src/screens/Auth/Signin";
+import Signup from "./src/screens/Auth/Signup";
+import useAuthStore from "./src/hooks/stores/useAuthStore";
+import Home from "./src/screens/Home/Home";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } },
 });
+
+const Stack = createNativeStackNavigator();
 
 function onAppStateChange(status: AppStateStatus) {
   // React Query already supports in web browser refetch on window focus by default
@@ -40,13 +48,32 @@ export default function App() {
   useNotification();
   useOnlineManager();
   useAppState(onAppStateChange);
+
+  const { isAuthenticated } = useAuthStore((state) => state);
+
   return (
     <>
       <StatusBar style="auto" />
       <QueryClientProvider client={queryClient}>
-        <SafeAreaView className="flex-1 bg-white" style={styles.rootContainer}>
-          <Text>Open up App.tsx to start working on your app!</Text>
-        </SafeAreaView>
+        <NavigationContainer>
+          <SafeAreaView
+            className="flex-1 bg-white"
+            style={styles.rootContainer}
+          >
+            <Stack.Navigator>
+              {!isAuthenticated ? (
+                <>
+                  <Stack.Screen name="signin" component={Signin} />
+                  <Stack.Screen name="signup" component={Signup} />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen name="home" component={Home} />
+                </>
+              )}
+            </Stack.Navigator>
+          </SafeAreaView>
+        </NavigationContainer>
       </QueryClientProvider>
     </>
   );

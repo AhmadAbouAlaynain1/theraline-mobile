@@ -10,6 +10,8 @@ interface IAuthState {
   setRefreshToken: (newToken: string) => void;
   user: any;
   setUser: (newUser: any) => void;
+  isAuthenticated: boolean;
+  setIsAuthenticated: (newIsAuthenticated: boolean) => void;
 }
 
 type MyPersist = (
@@ -30,6 +32,9 @@ const useAuthStore = create<IAuthState>(
 
       user: {},
       setUser: (newUser) => set({ user: newUser }),
+      isAuthenticated: false,
+      setIsAuthenticated: (newIsAuthenticated) =>
+        set({ isAuthenticated: newIsAuthenticated }),
     }),
 
     {
