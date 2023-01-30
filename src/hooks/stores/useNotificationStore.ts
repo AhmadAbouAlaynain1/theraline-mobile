@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create, StateCreator } from "zustand";
-import { persist } from "zustand/middleware";
-import { PersistOptions, createJSONStorage } from "zustand/middleware";
+import { persist, PersistOptions, createJSONStorage } from "zustand/middleware";
 
 interface NotificationState {
   expoPushToken: any;
@@ -11,7 +10,7 @@ interface NotificationState {
 }
 type MyPersist = (
   config: StateCreator<NotificationState>,
-  options: PersistOptions<NotificationState>
+  options: PersistOptions<NotificationState>,
 ) => StateCreator<NotificationState>;
 
 const useNotificationStore = create<NotificationState>(
@@ -26,8 +25,8 @@ const useNotificationStore = create<NotificationState>(
     {
       name: "async-storage",
       storage: createJSONStorage(() => AsyncStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useNotificationStore;

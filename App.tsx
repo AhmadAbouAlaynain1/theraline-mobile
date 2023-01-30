@@ -1,16 +1,12 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  StatusBar as RNStatusBar,
-  Platform,
-  SafeAreaView,
-} from "react-native";
+import { Platform } from "react-native";
+
 import {
   QueryClient,
   QueryClientProvider,
   focusManager,
 } from "@tanstack/react-query";
+
 import { useAppState } from "./src/hooks/queries/AppQuery/useAppState";
 import { useOnlineManager } from "./src/hooks/queries/AppQuery/useOnlineManager";
 import { AppStateStatus } from "react-native";
@@ -56,31 +52,23 @@ export default function App() {
       <StatusBar style="auto" />
       <QueryClientProvider client={queryClient}>
         <NavigationContainer>
-          <SafeAreaView
-            className="flex-1 bg-white"
-            style={styles.rootContainer}
-          >
-            <Stack.Navigator>
-              {!isAuthenticated ? (
-                <>
-                  <Stack.Screen name="signin" component={Signin} />
-                  <Stack.Screen name="signup" component={Signup} />
-                </>
-              ) : (
-                <>
-                  <Stack.Screen name="home" component={Home} />
-                </>
-              )}
-            </Stack.Navigator>
-          </SafeAreaView>
+          <Stack.Navigator
+            screenOptions={() => {
+              return { headerShown: false };
+            }}>
+            {!isAuthenticated ? (
+              <>
+                <Stack.Screen name="signin" component={Signin} />
+                <Stack.Screen name="signup" component={Signup} />
+              </>
+            ) : (
+              <>
+                <Stack.Screen name="home" component={Home} />
+              </>
+            )}
+          </Stack.Navigator>
         </NavigationContainer>
       </QueryClientProvider>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  rootContainer: {
-    paddingTop: Platform.OS === "android" ? RNStatusBar.currentHeight : 0,
-  },
-});
