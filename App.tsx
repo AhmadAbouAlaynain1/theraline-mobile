@@ -17,7 +17,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Signin from "./src/screens/Auth/Signin";
 import Signup from "./src/screens/Auth/Signup";
 import useAuthStore from "./src/hooks/stores/useAuthStore";
-import Home from "./src/screens/Home/Home";
+import Home from "./src/screens/Home";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } },
@@ -46,6 +46,7 @@ export default function App() {
   useAppState(onAppStateChange);
 
   const { isAuthenticated } = useAuthStore((state) => state);
+  const placeHolderAuthenticator = true;
 
   return (
     <>
@@ -56,7 +57,7 @@ export default function App() {
             screenOptions={() => {
               return { headerShown: false };
             }}>
-            {!isAuthenticated ? (
+            {!placeHolderAuthenticator ? (
               <>
                 <Stack.Screen name="signin" component={Signin} />
                 <Stack.Screen name="signup" component={Signup} />

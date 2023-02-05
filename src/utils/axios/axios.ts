@@ -1,8 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import useAuthStore from "../../hooks/stores/useAuthStore";
 
-let access = useAuthStore.getState().accessToken;
-let refresh = useAuthStore.getState().refreshToken;
 const setAccessToken = useAuthStore.getState().setAccessToken;
 
 const baseURL = "http://localhost:5000";
@@ -42,7 +40,7 @@ accessClient.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 accessClient.interceptors.response.use(
@@ -62,5 +60,5 @@ accessClient.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );

@@ -38,7 +38,6 @@ const Signup = ({ navigation }: any) => {
   const {
     control,
     handleSubmit,
-
     formState: { errors },
   } = useForm<signUpValues>({
     mode: "onBlur",
@@ -198,7 +197,7 @@ const Signup = ({ navigation }: any) => {
               </View>
             </View>
             <Button
-              classNames="bg-primary self-stretch rounded-xl mx-12"
+              classNames="bg-primary self-stretch rounded-xl mx-auto w-[80%]"
               textClassNames="text-white text-2xl font-bold"
               onPress={handleSubmit(onSubmit)}>
               Log in

@@ -124,7 +124,7 @@ const Signin = ({ navigation }: any) => {
               </View>
             </View>
             <Button
-              classNames="bg-primary self-stretch rounded-xl mx-12"
+              classNames="bg-primary self-stretch rounded-xl w-[80%] mx-auto"
               textClassNames="text-white text-2xl font-bold"
               onPress={handleSubmit(onSubmit)}>
               Log in
