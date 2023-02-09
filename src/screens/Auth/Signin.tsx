@@ -14,6 +14,7 @@ import Button from "../../components/Buttons/Button";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLoginMutation } from "../../hooks/mutations/auth/useLoginMutation";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
@@ -25,6 +26,8 @@ const signInSchema = z.object({
 type signInValues = z.infer<typeof signInSchema>;
 
 const Signin = ({ navigation }: any) => {
+  const { mutate: login } = useLoginMutation();
+
   const {
     control,
     handleSubmit,
@@ -40,6 +43,11 @@ const Signin = ({ navigation }: any) => {
   });
   const onSubmit: SubmitHandler<signInValues> = (data) => {
     console.log(data);
+    login(data, {
+      onError: (error) => {
+        console.log(error);
+      },
+    });
   };
 
   return (

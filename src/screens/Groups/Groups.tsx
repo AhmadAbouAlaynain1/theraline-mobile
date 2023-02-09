@@ -33,7 +33,11 @@ const Groups = () => {
           ),
         }}
       />
-      <GroupStack.Screen name="groupChat" component={GroupChat} />
+      <GroupStack.Screen
+        name="groupChat"
+        component={GroupChat}
+        options={({ route }: any) => ({ title: route.params.name })}
+      />
     </GroupStack.Navigator>
   );
 };

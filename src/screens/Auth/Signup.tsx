@@ -14,6 +14,7 @@ import { z } from "zod";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../components/Buttons/Button";
+import { useSignUpMutation } from "../../hooks/mutations/auth/useSignUpMutation";
 
 const signUpSchema = z
   .object({
@@ -35,6 +36,7 @@ const signUpSchema = z
 type signUpValues = z.infer<typeof signUpSchema>;
 
 const Signup = ({ navigation }: any) => {
+  const { mutate: signup } = useSignUpMutation();
   const {
     control,
     handleSubmit,
@@ -52,6 +54,14 @@ const Signup = ({ navigation }: any) => {
   });
   const onSubmit: SubmitHandler<signUpValues> = (data) => {
     console.log(data);
+    signup(data, {
+      onSuccess() {
+        navigation.navigate("signin");
+      },
+      onError(error, variables, context) {
+        console.log(error);
+      },
+    });
   };
 
   return (
@@ -192,7 +202,7 @@ const Signup = ({ navigation }: any) => {
                   onPress={() => {
                     navigation.navigate("signin");
                   }}>
-                  <Text className="text-primaryLight text-center">Sign in</Text>
+                  <Text className="text-primaryLight text-center">Sign Up</Text>
                 </Pressable>
               </View>
             </View>

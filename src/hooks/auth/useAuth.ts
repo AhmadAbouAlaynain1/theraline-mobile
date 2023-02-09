@@ -1,4 +1,5 @@
 import useAuthStore from "../stores/useAuthStore";
+import { useLoginMutation } from "../mutations/auth/useLoginMutation";
 
 export const useAuth = () => {
   const {
@@ -8,10 +9,6 @@ export const useAuth = () => {
 
     setIsAuthenticated,
   } = useAuthStore();
-
-  const login = (email: string, password: string) => {
-    // Axios login and set data to store
-  };
 
   const logout = () => {
     setAccessToken("");
@@ -25,10 +22,10 @@ export const useAuth = () => {
     lastName: string,
     email: string,
     password: string,
-    phone: string
+    phone: string,
   ) => {
     // Axios register and set data to store
   };
 
-  return { login, logout, register };
+  return { logout, register };
 };

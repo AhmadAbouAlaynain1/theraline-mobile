@@ -2,8 +2,9 @@ import axios, { AxiosRequestConfig } from "axios";
 import useAuthStore from "../../hooks/stores/useAuthStore";
 
 const setAccessToken = useAuthStore.getState().setAccessToken;
+const setIsAuthenticated = useAuthStore.getState().setIsAuthenticated;
 
-const baseURL = "http://localhost:5000";
+const baseURL = "https://theraline.onrender.com";
 
 const refreshToken = async () => {
   try {
@@ -55,6 +56,7 @@ accessClient.interceptors.response.use(
         config.headers.common.Authorization = `Bearer ${newAccessToken}`;
         return axios(config);
       } catch (err) {
+        setIsAuthenticated(false);
         throw err;
       }
     }

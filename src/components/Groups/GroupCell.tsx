@@ -4,18 +4,22 @@ import { Image, View, Text, Pressable } from "react-native";
 const GroupCell = ({
   id,
   name,
-  description,
+  lastMessage,
   time,
   unreadMessages,
   image,
   navigation,
 }: any) => {
+  const dataToSend = {
+    id,
+    name,
+  };
   return (
     <Pressable
       className="p-4 flex flex-row gap-2 h-28 w-full justify-between bg-white rounded-2xl "
       onPress={() => {
         console.log("Pressed");
-        navigation.navigate("groupChat", { id });
+        navigation.navigate("groupChat", dataToSend);
       }}>
       <Image
         className="w-[20%] h-full rounded-[40%] self-center"

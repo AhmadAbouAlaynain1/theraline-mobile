@@ -7,7 +7,7 @@ const mockData = [
   {
     id: 1,
     name: "Group 1",
-    description:
+    lastMessage:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nobis!",
     time: "12:14pm",
     unreadMessages: 12,
@@ -16,7 +16,7 @@ const mockData = [
   {
     id: 2,
     name: "Group 2",
-    description:
+    lastMessage:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nobis!",
     time: "12:14pm",
     unreadMessages: 12,
@@ -25,7 +25,7 @@ const mockData = [
   {
     id: 3,
     name: "Group 3",
-    description:
+    lastMessage:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nobis!",
     time: "12:14pm",
     unreadMessages: 12,

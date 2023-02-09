@@ -46,7 +46,6 @@ export default function App() {
   useAppState(onAppStateChange);
 
   const { isAuthenticated } = useAuthStore((state) => state);
-  const placeHolderAuthenticator = true;
 
   return (
     <>
@@ -57,7 +56,7 @@ export default function App() {
             screenOptions={() => {
               return { headerShown: false };
             }}>
-            {!placeHolderAuthenticator ? (
+            {!isAuthenticated ? (
               <>
                 <Stack.Screen name="signin" component={Signin} />
                 <Stack.Screen name="signup" component={Signup} />
