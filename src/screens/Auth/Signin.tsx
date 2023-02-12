@@ -15,18 +15,19 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLoginMutation } from "../../hooks/mutations/auth/useLoginMutation";
+import { AxiosError } from "axios";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
+  password: z.string().min(1, { message: "Please enter your password" }),
 });
 
 type signInValues = z.infer<typeof signInSchema>;
 
 const Signin = ({ navigation }: any) => {
   const { mutate: login } = useLoginMutation();
+  const [signInError, setSignInError] = React.useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const {
     control,
@@ -43,9 +44,18 @@ const Signin = ({ navigation }: any) => {
   });
   const onSubmit: SubmitHandler<signInValues> = (data) => {
     console.log(data);
+    setIsSubmitting(true);
     login(data, {
+      onSuccess: () => {
+        setIsSubmitting(false);
+        setSignInError(null);
+      },
       onError: (error) => {
+        setIsSubmitting(false);
         console.log(error);
+        if (error instanceof AxiosError) {
+          setSignInError(error?.response?.data.message);
+        }
       },
     });
   };
@@ -115,6 +125,7 @@ const Signin = ({ navigation }: any) => {
                     </Text>
                   )}
                 </View>
+                <Text className="text-rose-400">{signInError}</Text>
               </View>
               <Text className="font-bold text-xl text-white text-center">
                 Log in as a Doctor or Patient
@@ -132,10 +143,13 @@ const Signin = ({ navigation }: any) => {
               </View>
             </View>
             <Button
-              classNames="bg-primary self-stretch rounded-xl w-[80%] mx-auto"
+              classNames={`${
+                isSubmitting ? "bg-primaryLight" : "bg-primary"
+              } self-stretch rounded-xl w-[80%] mx-auto`}
+              disabled={isSubmitting}
               textClassNames="text-white text-2xl font-bold"
               onPress={handleSubmit(onSubmit)}>
-              Log in
+              {isSubmitting ? "Loading..." : "Log in"}
             </Button>
           </View>
         </KeyboardAvoidingView>

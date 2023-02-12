@@ -28,10 +28,8 @@ const signUpUser = async ({
 export const useSignUpMutation = () => {
   return useMutation({
     mutationFn: signUpUser,
-    onError: (error, variables, context) => {
+    onError: (error) => {
       console.log(error);
-      console.log(variables);
-      console.log(context);
     },
   });
 };

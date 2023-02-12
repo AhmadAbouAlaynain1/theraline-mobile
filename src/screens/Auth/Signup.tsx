@@ -15,6 +15,7 @@ import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../../components/Buttons/Button";
 import { useSignUpMutation } from "../../hooks/mutations/auth/useSignUpMutation";
+import { AxiosError } from "axios";
 
 const signUpSchema = z
   .object({
@@ -36,6 +37,8 @@ const signUpSchema = z
 type signUpValues = z.infer<typeof signUpSchema>;
 
 const Signup = ({ navigation }: any) => {
+  const [signUpError, setSignUpError] = React.useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const { mutate: signup } = useSignUpMutation();
   const {
     control,
@@ -54,12 +57,17 @@ const Signup = ({ navigation }: any) => {
   });
   const onSubmit: SubmitHandler<signUpValues> = (data) => {
     console.log(data);
+    setIsSubmitting(true);
     signup(data, {
       onSuccess() {
+        setIsSubmitting(false);
         navigation.navigate("signin");
       },
-      onError(error, variables, context) {
-        console.log(error);
+      onError(error) {
+        setIsSubmitting(false);
+        if (error instanceof AxiosError) {
+          setSignUpError(error?.response?.data.message);
+        }
       },
     });
   };
@@ -190,6 +198,7 @@ const Signup = ({ navigation }: any) => {
                     </Text>
                   )}
                 </View>
+                <Text className="text-rose-400 text-center">{signUpError}</Text>
               </View>
               <Text className="font-bold text-xl text-white text-center">
                 Sign up as a patient
@@ -207,10 +216,13 @@ const Signup = ({ navigation }: any) => {
               </View>
             </View>
             <Button
-              classNames="bg-primary self-stretch rounded-xl mx-auto w-[80%]"
+              classNames={`${
+                isSubmitting ? "bg-primaryLight" : "bg-primary"
+              } self-stretch rounded-xl mx-auto w-[80%]`}
+              disabled={isSubmitting}
               textClassNames="text-white text-2xl font-bold"
               onPress={handleSubmit(onSubmit)}>
-              Log in
+              {isSubmitting ? "Loading..." : "Sign Up"}
             </Button>
           </View>
         </KeyboardAvoidingView>

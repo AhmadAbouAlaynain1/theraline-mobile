@@ -6,16 +6,21 @@ type ButtonProps = {
   textClassNames?: string;
   children: React.ReactNode;
   onPress: () => void;
+  disabled?: boolean;
 };
 
 const Button = ({
+  disabled,
   children,
   classNames,
   onPress,
   textClassNames,
 }: ButtonProps) => {
   return (
-    <Pressable className={`p-3 ${classNames}`} onPress={onPress}>
+    <Pressable
+      className={`p-3 ${classNames}`}
+      onPress={onPress}
+      disabled={disabled}>
       <Text className={`text-center ${textClassNames}`}>{children}</Text>
     </Pressable>
   );

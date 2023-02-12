@@ -8,7 +8,7 @@ const baseURL = "https://theraline.onrender.com";
 
 const refreshToken = async () => {
   try {
-    const res = await refreshClient.post("/api/refresh_token");
+    const res = await refreshClient.post("/auth/refresh");
     return res.data.access_token;
   } catch (err) {
     throw err;

@@ -56,7 +56,7 @@ export default function App() {
             screenOptions={() => {
               return { headerShown: false };
             }}>
-            {!isAuthenticated ? (
+            {!false ? (
               <>
                 <Stack.Screen name="signin" component={Signin} />
                 <Stack.Screen name="signup" component={Signup} />
