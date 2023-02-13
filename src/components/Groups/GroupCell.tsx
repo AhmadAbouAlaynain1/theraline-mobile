@@ -16,13 +16,20 @@ const GroupCell = ({
   };
   return (
     <Pressable
-      className="p-4 flex flex-row gap-2 h-28 w-full justify-between bg-white rounded-2xl "
+      className="p-4 flex flex-row gap-2 h-28 w-full justify-between bg-white "
+      style={{
+        borderRadius: 30,
+        overflow: "hidden",
+      }}
       onPress={() => {
         console.log("Pressed");
         navigation.navigate("groupChat", dataToSend);
       }}>
       <Image
-        className="w-[20%] h-full rounded-[40%] self-center"
+        className="w-[20%] h-full  self-center "
+        style={{
+          borderRadius: 50,
+        }}
         source={require("../../../assets/bgAuth.png")}
       />
       <View className="flex flex-col justify-between w-[60%]">
@@ -33,7 +40,11 @@ const GroupCell = ({
       </View>
       <View className="flex flex-col justify-between items-center">
         <Text className="text-gray-400 text-center">12:14pm</Text>
-        <View className=" bg-primary w-8 rounded-[50%]">
+        <View
+          className=" bg-primary w-8 "
+          style={{
+            borderRadius: 50,
+          }}>
           <Text className="text-center text-white text-xl">12</Text>
         </View>
       </View>

@@ -68,9 +68,12 @@ const GroupChat = ({ route }: any) => {
                 item.isMe ? "justify-end" : "justify-start"
               }`}>
               <View
-                className={`flex w-[65%] flex-col p-2 rounded-lg ${
+                className={`flex w-[65%] flex-col p-2 ${
                   item.isMe ? "bg-primaryLight" : "bg-primary"
-                } `}>
+                } `}
+                style={{
+                  borderRadius: 10,
+                }}>
                 {!item.isMe && (
                   <Text className="font-bold text-white">John</Text>
                 )}
@@ -97,7 +100,10 @@ const GroupChat = ({ route }: any) => {
       </View>
       <View className="w-full h-16 flex p-2 flex-row items-center justify-center">
         <TextInput
-          className="w-[80%] p-3 bg-white rounded-xl"
+          className="w-[80%] p-3 bg-white "
+          style={{
+            borderRadius: 10,
+          }}
           value={text}
           placeholder="Type a message..."
           onChangeText={(text) => setText(text)}

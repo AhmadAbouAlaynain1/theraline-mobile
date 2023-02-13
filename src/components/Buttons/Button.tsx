@@ -7,6 +7,7 @@ type ButtonProps = {
   children: React.ReactNode;
   onPress: () => void;
   disabled?: boolean;
+  borderRadius?: number;
 };
 
 const Button = ({
@@ -15,10 +16,14 @@ const Button = ({
   classNames,
   onPress,
   textClassNames,
+  borderRadius,
 }: ButtonProps) => {
   return (
     <Pressable
       className={`p-3 ${classNames}`}
+      style={{
+        borderRadius: borderRadius ? borderRadius : 10,
+      }}
       onPress={onPress}
       disabled={disabled}>
       <Text className={`text-center ${textClassNames}`}>{children}</Text>

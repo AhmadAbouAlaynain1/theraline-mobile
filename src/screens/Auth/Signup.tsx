@@ -81,8 +81,11 @@ const Signup = ({ navigation }: any) => {
           <View className="flex-1 flex-col justify-between items-center pt-[40] pb-[40]">
             <View className="flex flex-col gap-5 w-[80%]">
               <View
-                className=" p-4  flex flex-col space-y-4 rounded-xl"
-                style={{ backgroundColor: "rgba(0,0,0,0.2)" }}>
+                className=" p-4  flex flex-col space-y-4  "
+                style={{
+                  borderRadius: 10,
+                  backgroundColor: "rgba(0,0,0,0.2)",
+                }}>
                 <View className=" space-y-1">
                   <Text className="text-white text-xl font-semibold">
                     First Name
@@ -94,7 +97,10 @@ const Signup = ({ navigation }: any) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        className="bg-white px-2 h-14 text-xl rounded-xl"
+                        className="bg-white px-2 h-14 text-xl  "
+                        style={{
+                          borderRadius: 10,
+                        }}
                       />
                     )}
                     name="firstName"
@@ -116,7 +122,10 @@ const Signup = ({ navigation }: any) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        className="bg-white px-2 h-14 text-xl rounded-xl"
+                        className="bg-white px-2 h-14 text-xl  "
+                        style={{
+                          borderRadius: 10,
+                        }}
                       />
                     )}
                     name="lastName"
@@ -138,7 +147,10 @@ const Signup = ({ navigation }: any) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        className="bg-white px-2 h-14  text-xl rounded-xl"
+                        className="bg-white px-2 h-14  text-xl  "
+                        style={{
+                          borderRadius: 10,
+                        }}
                         textContentType="emailAddress"
                       />
                     )}
@@ -163,7 +175,10 @@ const Signup = ({ navigation }: any) => {
                         value={value}
                         textContentType="password"
                         secureTextEntry={true}
-                        className="bg-white px-2 h-14 text-xl rounded-xl"
+                        className="bg-white px-2 h-14 text-xl  "
+                        style={{
+                          borderRadius: 10,
+                        }}
                       />
                     )}
                     name="password"
@@ -187,7 +202,10 @@ const Signup = ({ navigation }: any) => {
                         value={value}
                         textContentType="password"
                         secureTextEntry={true}
-                        className="bg-white px-2 h-14 text-xl rounded-xl"
+                        className="bg-white px-2 h-14 text-xl  "
+                        style={{
+                          borderRadius: 10,
+                        }}
                       />
                     )}
                     name="confirmPassword"
@@ -218,7 +236,7 @@ const Signup = ({ navigation }: any) => {
             <Button
               classNames={`${
                 isSubmitting ? "bg-primaryLight" : "bg-primary"
-              } self-stretch rounded-xl mx-auto w-[80%]`}
+              } self-stretch mx-auto w-[80%]`}
               disabled={isSubmitting}
               textClassNames="text-white text-2xl font-bold"
               onPress={handleSubmit(onSubmit)}>

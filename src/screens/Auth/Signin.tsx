@@ -76,8 +76,11 @@ const Signin = ({ navigation }: any) => {
 
             <View className="flex flex-col gap-5 w-[80%]">
               <View
-                className=" p-4  flex flex-col space-y-4 rounded-xl"
-                style={{ backgroundColor: "rgba(0,0,0,0.2)" }}>
+                className=" p-4  flex flex-col space-y-4 "
+                style={{
+                  backgroundColor: "rgba(0,0,0,0.2)",
+                  borderRadius: 20,
+                }}>
                 <View className=" space-y-1">
                   <Text className="text-white text-xl font-semibold">
                     Email
@@ -89,7 +92,10 @@ const Signin = ({ navigation }: any) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        className="bg-white px-2 h-12 text-xl rounded-xl"
+                        className="bg-white px-2 h-12 text-xl "
+                        style={{
+                          borderRadius: 10,
+                        }}
                         textContentType="emailAddress"
                       />
                     )}
@@ -114,7 +120,10 @@ const Signin = ({ navigation }: any) => {
                         value={value}
                         textContentType="password"
                         secureTextEntry={true}
-                        className="bg-white px-2 h-12 text-xl rounded-xl"
+                        className="bg-white px-2 h-12 text-xl "
+                        style={{
+                          borderRadius: 10,
+                        }}
                       />
                     )}
                     name="password"
@@ -130,9 +139,9 @@ const Signin = ({ navigation }: any) => {
               <Text className="font-bold text-xl text-white text-center">
                 Log in as a Doctor or Patient
               </Text>
-              <View className="text-white text-center  flex-row justify-center">
+              <View className="text-white text-center flex-row justify-center">
                 <Text className="text-white text-center">
-                  Are you a patient?{" "}
+                  Are you a patient?
                 </Text>
                 <Pressable
                   onPress={() => {
@@ -145,7 +154,7 @@ const Signin = ({ navigation }: any) => {
             <Button
               classNames={`${
                 isSubmitting ? "bg-primaryLight" : "bg-primary"
-              } self-stretch rounded-xl w-[80%] mx-auto`}
+              } self-stretch w-[80%] mx-auto`}
               disabled={isSubmitting}
               textClassNames="text-white text-2xl font-bold"
               onPress={handleSubmit(onSubmit)}>

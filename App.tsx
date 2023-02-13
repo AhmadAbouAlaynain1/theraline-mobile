@@ -18,6 +18,7 @@ import Signin from "./src/screens/Auth/Signin";
 import Signup from "./src/screens/Auth/Signup";
 import useAuthStore from "./src/hooks/stores/useAuthStore";
 import Home from "./src/screens/Home";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } },
@@ -51,23 +52,25 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={() => {
-              return { headerShown: false };
-            }}>
-            {!false ? (
-              <>
-                <Stack.Screen name="signin" component={Signin} />
-                <Stack.Screen name="signup" component={Signup} />
-              </>
-            ) : (
-              <>
-                <Stack.Screen name="home" component={Home} />
-              </>
-            )}
-          </Stack.Navigator>
-        </NavigationContainer>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={() => {
+                return { headerShown: false };
+              }}>
+              {!isAuthenticated ? (
+                <>
+                  <Stack.Screen name="signin" component={Signin} />
+                  <Stack.Screen name="signup" component={Signup} />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen name="home" component={Home} />
+                </>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaProvider>
       </QueryClientProvider>
     </>
   );

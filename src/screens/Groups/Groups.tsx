@@ -4,11 +4,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import GroupChat from "./GroupChat";
 import AllGroups from "./AllGroups";
 import SafeView from "../../components/General/SafeView";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 const GroupStack = createNativeStackNavigator();
 
 const Groups = () => {
   const [search, setSearch] = React.useState("");
+  const insets = useSafeAreaInsets();
   return (
     <GroupStack.Navigator>
       <GroupStack.Screen
@@ -16,15 +21,26 @@ const Groups = () => {
         component={AllGroups}
         options={{
           header: () => (
-            <SafeAreaView className="flex flex-row justify-between mx-4">
+            <SafeAreaView
+              className="flex flex-row justify-between mx-4 items-center"
+              style={{
+                paddingTop: insets.top,
+                paddingBottom: insets.bottom,
+              }}>
               <TextInput
                 placeholder="Search..."
                 value={search}
                 onChangeText={(text) => setSearch(text)}
-                className="w-[80%] p-4 shadow-lg border-gray-100 bg-white rounded-xl"
+                className="w-[80%] p-4 shadow-lg border-gray-100 bg-white "
+                style={{
+                  borderRadius: 10,
+                }}
               />
               <Image
-                className="w-12 h-12 rounded-[50%]"
+                className="w-12 h-12"
+                style={{
+                  borderRadius: 50,
+                }}
                 source={{
                   uri: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
                 }}
@@ -43,21 +59,3 @@ const Groups = () => {
 };
 
 export default Groups;
-
-/*header: () => {
-            return (
-              <View className="flex flex-row p-4 justify-between ">
-                <TextInput
-                  placeholder="Search..."
-                  value={search}
-                  onChangeText={(text) => setSearch(text)}
-                  className="w-[80%] p-4 shadow-lg border-gray-100 bg-white rounded-xl"
-                />
-                <Image
-                  className="w-12 h-12 rounded-[50%]"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
-                  }}
-                />
-              </View>
-            );}*/
