@@ -1,13 +1,9 @@
 import React from "react";
-import { Text, View, TextInput, Image, SafeAreaView } from "react-native";
+import { TextInput, Image, SafeAreaView } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GroupChat from "./GroupChat";
 import AllGroups from "./AllGroups";
-import SafeView from "../../components/General/SafeView";
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
 
 const GroupStack = createNativeStackNavigator();
 
