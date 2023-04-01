@@ -1,0 +1,9 @@
+import React from "react";
+import { Link } from "expo-router";
+import { SafeAreaView, Text } from "react-native";
+
+const Home = () => {
+  return <Text>Home</Text>;
+};
+
+export default Home;

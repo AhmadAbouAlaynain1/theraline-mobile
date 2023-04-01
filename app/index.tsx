@@ -1,11 +1,15 @@
 import React from "react";
-import { Text, View } from "react-native/types";
+import { Text, SafeAreaView } from "react-native";
+import { Link } from "expo-router";
 
 const Home = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>Hello World</Text>
-    </View>
+      <Link href="/auth/signIn">Go to Sign In</Link>
+      <Link href="/home">Go to Home</Link>
+      <Link href="/home/test">Go to test</Link>
+    </SafeAreaView>
   );
 };
 
