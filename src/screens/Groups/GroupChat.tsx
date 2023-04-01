@@ -75,7 +75,7 @@ const GroupChat = ({ route }: any) => {
                   borderRadius: 10,
                 }}>
                 {!item.isMe && (
-                  <Text className="font-bold text-white">John</Text>
+                  <Text className="font-bold text-white">~John</Text>
                 )}
                 <View className="flex-row">
                   <Text
