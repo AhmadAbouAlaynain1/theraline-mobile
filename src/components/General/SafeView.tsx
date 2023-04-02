@@ -11,7 +11,13 @@ type SafeViewProps = {
   classNames?: string;
 };
 
-const SafeView = ({ children, classNames }: SafeViewProps) => {
+const styles = StyleSheet.create({
+  rootContainer: {
+    paddingTop: Platform.OS === "android" ? RNStatusBar.currentHeight : 0,
+  },
+});
+
+function SafeView({ children, classNames }: SafeViewProps) {
   return (
     <SafeAreaView
       className={`flex-1 ${classNames}`}
@@ -19,12 +25,10 @@ const SafeView = ({ children, classNames }: SafeViewProps) => {
       {children}
     </SafeAreaView>
   );
-};
+}
 
-const styles = StyleSheet.create({
-  rootContainer: {
-    paddingTop: Platform.OS === "android" ? RNStatusBar.currentHeight : 0,
-  },
-});
+SafeView.defaultProps = {
+  classNames: "",
+};
 
 export default SafeView;

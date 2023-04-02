@@ -11,9 +11,10 @@ export function useOnlineManager() {
         onlineManager.setOnline(
           state.isConnected != null &&
             state.isConnected &&
-            Boolean(state.isInternetReachable)
+            Boolean(state.isInternetReachable),
         );
       });
     }
+    return undefined;
   }, []);
 }

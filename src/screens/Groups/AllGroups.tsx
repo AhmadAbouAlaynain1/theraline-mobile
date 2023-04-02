@@ -1,7 +1,6 @@
 import React from "react";
-import { Text, View, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import GroupCell from "../../components/Groups/GroupCell";
-import SafeView from "../../components/General/SafeView";
 
 const mockData = [
   {
@@ -33,21 +32,25 @@ const mockData = [
   },
 ];
 
-const AllGroups = ({ navigation }: any) => {
+function ItemSeperator() {
+  return <View className="h-4" />;
+}
+
+function AllGroups({ navigation }: any) {
   return (
     <View className="m-4 flex items-center">
       <FlatList
         className="min-h-full"
-        directionalLockEnabled={true}
+        directionalLockEnabled
         data={mockData}
         renderItem={({ item }) => (
           <GroupCell {...item} navigation={navigation} />
         )}
         keyExtractor={(item) => item.id.toString()}
-        ItemSeparatorComponent={() => <View className="h-4" />}
+        ItemSeparatorComponent={ItemSeperator}
       />
     </View>
   );
-};
+}
 
 export default AllGroups;

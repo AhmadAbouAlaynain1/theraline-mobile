@@ -10,25 +10,32 @@ type ButtonProps = {
   borderRadius?: number;
 };
 
-const Button = ({
+function Button({
   disabled,
   children,
   classNames,
   onPress,
   textClassNames,
   borderRadius,
-}: ButtonProps) => {
+}: ButtonProps) {
   return (
     <Pressable
       className={`p-3 ${classNames}`}
       style={{
-        borderRadius: borderRadius ? borderRadius : 10,
+        borderRadius,
       }}
       onPress={onPress}
       disabled={disabled}>
       <Text className={`text-center ${textClassNames}`}>{children}</Text>
     </Pressable>
   );
+}
+
+Button.defaultProps = {
+  disabled: true,
+  classNames: "",
+  textClassNames: "",
+  borderRadius: 10,
 };
 
 export default Button;

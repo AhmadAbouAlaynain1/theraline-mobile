@@ -1,41 +1,8 @@
-import useNotificationStore from "../stores/useNotificationStore";
 import { useEffect, useRef } from "react";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
-
-export const useNotification = () => {
-  const { setExpoPushToken, setNotification } = useNotificationStore(
-    (state) => state
-  );
-
-  const notificationListener: any = useRef();
-  const responseListener: any = useRef();
-
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
-    // When it arrives
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-
-    // When it is tapped
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-
-    return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
-    };
-  }, []);
-};
+import useNotificationStore from "../stores/useNotificationStore";
 
 async function registerForPushNotificationsAsync() {
   let token;
@@ -58,14 +25,57 @@ async function registerForPushNotificationsAsync() {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
+      // eslint-disable-next-line no-alert
       alert("Failed to get push token for push notification!");
-      return;
+      return null;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
   } else {
+    // eslint-disable-next-line no-alert
     alert("Must use physical device for Push Notifications");
   }
 
   return token;
 }
+
+export const useNotification = () => {
+  const { setExpoPushToken, setNotification } = useNotificationStore(
+    (state) => state,
+  );
+
+  const notificationListener: any = useRef();
+  const responseListener: any = useRef();
+
+  useEffect(() => {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token),
+    );
+    // When it arrives
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    // When it is tapped
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current,
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, [setExpoPushToken, setNotification]);
+};

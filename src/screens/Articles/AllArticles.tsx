@@ -47,32 +47,30 @@ const mockArticles = [
 
 const mockFilters = ["All", "Top", "Trending"];
 
-const AllArticles = ({ navigation }: any) => {
+function AllArticles({ navigation }: any) {
   const [filter, setFilter] = React.useState("All");
   return (
     <View className="flex flex-1 w-full">
       {/* Render Filter Tags here can be pressed and changes filter state */}
       <View className=" flex-row gap-4 items-center justify-center mt-1 mb-2">
-        {mockFilters.map((item, index) => {
-          return (
-            <Pressable
-              className={`${
-                filter === item ? "bg-primary" : "bg-primaryLight"
-              } p-2 `}
-              style={{
-                borderRadius: 5,
-              }}
-              key={index}
-              onPress={() => setFilter(item)}>
-              <Text>{item}</Text>
-            </Pressable>
-          );
-        })}
+        {mockFilters.map((item) => (
+          <Pressable
+            className={`${
+              filter === item ? "bg-primary" : "bg-primaryLight"
+            } p-2 `}
+            style={{
+              borderRadius: 5,
+            }}
+            key={item}
+            onPress={() => setFilter(item)}>
+            <Text>{item}</Text>
+          </Pressable>
+        ))}
       </View>
       <View className="flex flex-col gap-4">
         {/* Map through Mock Articles in a FlatList with Article Item for every component  */}
         <FlatList
-          directionalLockEnabled={true}
+          directionalLockEnabled
           data={mockArticles}
           renderItem={({ item }) => (
             <ArticleItem item={item} navigation={navigation} />
@@ -82,6 +80,6 @@ const AllArticles = ({ navigation }: any) => {
       </View>
     </View>
   );
-};
+}
 
 export default AllArticles;

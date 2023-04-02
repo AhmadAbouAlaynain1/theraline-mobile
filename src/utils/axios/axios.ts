@@ -1,19 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 import useAuthStore from "../../hooks/stores/useAuthStore";
 
-const setAccessToken = useAuthStore.getState().setAccessToken;
-const setIsAuthenticated = useAuthStore.getState().setIsAuthenticated;
+const { setAccessToken } = useAuthStore.getState();
+const { setIsAuthenticated } = useAuthStore.getState();
 
 const baseURL = "https://theraline.onrender.com";
-
-const refreshToken = async () => {
-  try {
-    const res = await refreshClient.post("/auth/refresh");
-    return res.data.access_token;
-  } catch (err) {
-    throw err;
-  }
-};
 
 const refreshClient = axios.create({
   baseURL,
@@ -22,6 +13,11 @@ const refreshClient = axios.create({
     Authorization: `Bearer ${useAuthStore.getState().refreshToken}`,
   },
 });
+
+const refreshToken = async () => {
+  const res = await refreshClient.post("/auth/refresh");
+  return res.data.access_token;
+};
 
 export const accessClient = axios.create({
   baseURL,
@@ -32,16 +28,15 @@ export const accessClient = axios.create({
 
 accessClient.interceptors.request.use(
   (config: AxiosRequestConfig<any>) => {
+    const newConfig = config;
     if (useAuthStore.getState().accessToken) {
-      config.headers.Authorization = `Bearer ${
+      newConfig.headers.Authorization = `Bearer ${
         useAuthStore.getState().accessToken
       }`;
     }
-    return config;
+    return newConfig;
   },
-  (error) => {
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
 accessClient.interceptors.response.use(
@@ -52,9 +47,9 @@ accessClient.interceptors.response.use(
       try {
         const newAccessToken = await refreshToken();
         setAccessToken(newAccessToken);
-        const config = error.config;
+        const { config } = error;
         config.headers.common.Authorization = `Bearer ${newAccessToken}`;
-        return axios(config);
+        return await axios(config);
       } catch (err) {
         setIsAuthenticated(false);
         throw err;

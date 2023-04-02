@@ -6,7 +6,7 @@ type ArticleItemProps = {
   navigation: any;
 };
 
-const ArticleItem = ({ item, navigation }: ArticleItemProps) => {
+function ArticleItem({ item, navigation }: ArticleItemProps) {
   return (
     <Pressable
       className="p-4 bg-white my-4 mx-2 flex gap-2"
@@ -27,6 +27,6 @@ const ArticleItem = ({ item, navigation }: ArticleItemProps) => {
       </View>
     </Pressable>
   );
-};
+}
 
 export default ArticleItem;

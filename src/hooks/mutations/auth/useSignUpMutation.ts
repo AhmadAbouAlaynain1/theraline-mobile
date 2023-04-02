@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { accessClient } from "../../../utils/axios/axios";
-import useAuthStore from "../../stores/useAuthStore";
 
 const signUpUser = async ({
   email,
@@ -15,7 +14,6 @@ const signUpUser = async ({
   lastName: string;
   confirmPassword: string;
 }) => {
-  console.log("REACHED HERE");
   return accessClient.post("/auth/signup", {
     email,
     password,
@@ -25,11 +23,10 @@ const signUpUser = async ({
   });
 };
 
-export const useSignUpMutation = () => {
-  return useMutation({
+export const useSignUpMutation = () =>
+  useMutation({
     mutationFn: signUpUser,
     onError: (error) => {
       console.log(error);
     },
   });
-};

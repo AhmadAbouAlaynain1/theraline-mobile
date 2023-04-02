@@ -1,5 +1,5 @@
-import { accessClient } from "../../../utils/axios/axios";
 import { useMutation } from "@tanstack/react-query";
+import { accessClient } from "../../../utils/axios/axios";
 import useAuthStore from "../../stores/useAuthStore";
 
 const loginUser = async ({
@@ -8,9 +8,7 @@ const loginUser = async ({
 }: {
   email: string;
   password: string;
-}) => {
-  return accessClient.post("/auth/signin", { email, password });
-};
+}) => accessClient.post("/auth/signin", { email, password });
 
 export const useLoginMutation = () => {
   const { setAccessToken, setRefreshToken, setIsAuthenticated } =

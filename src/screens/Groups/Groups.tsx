@@ -7,7 +7,37 @@ import AllGroups from "./AllGroups";
 
 const GroupStack = createNativeStackNavigator();
 
-const Groups = () => {
+function Header({ search, setSearch, insets }: any) {
+  return (
+    <SafeAreaView
+      className="flex flex-row justify-between mx-4 items-center"
+      style={{
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+      }}>
+      <TextInput
+        placeholder="Search..."
+        value={search}
+        onChangeText={(text) => setSearch(text)}
+        className="w-[80%] p-4 shadow-lg border-gray-100 bg-white "
+        style={{
+          borderRadius: 10,
+        }}
+      />
+      <Image
+        className="w-12 h-12"
+        style={{
+          borderRadius: 50,
+        }}
+        source={{
+          uri: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
+        }}
+      />
+    </SafeAreaView>
+  );
+}
+
+function Groups() {
   const [search, setSearch] = React.useState("");
   const insets = useSafeAreaInsets();
   return (
@@ -16,33 +46,12 @@ const Groups = () => {
         name="allGroups"
         component={AllGroups}
         options={{
-          header: () => (
-            <SafeAreaView
-              className="flex flex-row justify-between mx-4 items-center"
-              style={{
-                paddingTop: insets.top,
-                paddingBottom: insets.bottom,
-              }}>
-              <TextInput
-                placeholder="Search..."
-                value={search}
-                onChangeText={(text) => setSearch(text)}
-                className="w-[80%] p-4 shadow-lg border-gray-100 bg-white "
-                style={{
-                  borderRadius: 10,
-                }}
-              />
-              <Image
-                className="w-12 h-12"
-                style={{
-                  borderRadius: 50,
-                }}
-                source={{
-                  uri: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
-                }}
-              />
-            </SafeAreaView>
-          ),
+          header: () =>
+            Header({
+              setSearch,
+              search,
+              insets,
+            }),
         }}
       />
       <GroupStack.Screen
@@ -52,6 +61,6 @@ const Groups = () => {
       />
     </GroupStack.Navigator>
   );
-};
+}
 
 export default Groups;

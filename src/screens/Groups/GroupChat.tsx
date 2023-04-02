@@ -5,12 +5,10 @@ import {
   TextInput,
   View,
   Platform,
-  Image,
   Pressable,
   FlatList,
 } from "react-native";
-import SafeView from "../../components/General/SafeView";
-import { Ionicons, FontAwesome, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 const mockMessages = [
   {
@@ -43,9 +41,13 @@ const mockMessages = [
   },
 ];
 
-const GroupChat = ({ route }: any) => {
-  const [text, setText] = React.useState("");
-  const [messages, setMessages] = React.useState(mockMessages);
+function ItemSeperator() {
+  return <View className="h-4" />;
+}
+
+function GroupChat() {
+  const [textMessage, setTextMessage] = React.useState("");
+  const [messages] = React.useState(mockMessages);
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={100}
@@ -60,7 +62,7 @@ const GroupChat = ({ route }: any) => {
             justifyContent: "flex-start",
             flexDirection: "column-reverse",
           }}
-          directionalLockEnabled={true}
+          directionalLockEnabled
           data={messages}
           renderItem={({ item }) => (
             <View
@@ -95,7 +97,7 @@ const GroupChat = ({ route }: any) => {
             </View>
           )}
           keyExtractor={(item) => item.id.toString()}
-          ItemSeparatorComponent={() => <View className="h-4" />}
+          ItemSeparatorComponent={ItemSeperator}
         />
       </View>
       <View className="w-full h-16 flex p-2 flex-row items-center justify-center">
@@ -104,9 +106,9 @@ const GroupChat = ({ route }: any) => {
           style={{
             borderRadius: 10,
           }}
-          value={text}
+          value={textMessage}
           placeholder="Type a message..."
-          onChangeText={(text) => setText(text)}
+          onChangeText={(text) => setTextMessage(text)}
         />
 
         <Pressable
@@ -119,6 +121,6 @@ const GroupChat = ({ route }: any) => {
       </View>
     </KeyboardAvoidingView>
   );
-};
+}
 
 export default GroupChat;

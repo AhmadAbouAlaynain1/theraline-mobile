@@ -1,15 +1,9 @@
 import React from "react";
 import { Image, View, Text, Pressable } from "react-native";
 
-const GroupCell = ({
-  id,
-  name,
-  lastMessage,
-  time,
-  unreadMessages,
-  image,
-  navigation,
-}: any) => {
+const bgImage = require("../../../assets/bgAuth.png");
+
+function GroupCell({ id, name, navigation }: any) {
   const dataToSend = {
     id,
     name,
@@ -30,7 +24,7 @@ const GroupCell = ({
         style={{
           borderRadius: 50,
         }}
-        source={require("../../../assets/bgAuth.png")}
+        source={bgImage}
       />
       <View className="flex flex-col justify-between w-[60%]">
         <Text className="font-bold">Group Name</Text>
@@ -50,6 +44,6 @@ const GroupCell = ({
       </View>
     </Pressable>
   );
-};
+}
 
 export default GroupCell;

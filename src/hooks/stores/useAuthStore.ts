@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StateCreator, create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
-import { PersistOptions } from "zustand/middleware";
+import { createJSONStorage, persist, PersistOptions } from "zustand/middleware";
 
 interface IAuthState {
   accessToken: string;
@@ -16,7 +15,7 @@ interface IAuthState {
 
 type MyPersist = (
   config: StateCreator<IAuthState>,
-  options: PersistOptions<IAuthState>
+  options: PersistOptions<IAuthState>,
 ) => StateCreator<IAuthState>;
 
 const useAuthStore = create<IAuthState>(
@@ -40,8 +39,8 @@ const useAuthStore = create<IAuthState>(
     {
       name: "auth-storage",
       storage: createJSONStorage(() => AsyncStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useAuthStore;

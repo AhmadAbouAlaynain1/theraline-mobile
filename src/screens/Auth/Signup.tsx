@@ -7,15 +7,14 @@ import {
   Platform,
   Pressable,
 } from "react-native";
-import AuthLayout from "../../components/Auth/AuthLayout";
-import Logo from "../../components/General/Logo";
-import SafeView from "../../components/General/SafeView";
 import { z } from "zod";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
+import AuthLayout from "../../components/Auth/AuthLayout";
+import SafeView from "../../components/General/SafeView";
 import Button from "../../components/Buttons/Button";
 import { useSignUpMutation } from "../../hooks/mutations/auth/useSignUpMutation";
-import { AxiosError } from "axios";
 
 const signUpSchema = z
   .object({
@@ -34,9 +33,9 @@ const signUpSchema = z
     path: ["confirmPassword"],
   });
 
-type signUpValues = z.infer<typeof signUpSchema>;
+type SignUpValues = z.infer<typeof signUpSchema>;
 
-const Signup = ({ navigation }: any) => {
+function Signup({ navigation }: any) {
   const [signUpError, setSignUpError] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
   const { mutate: signup } = useSignUpMutation();
@@ -44,7 +43,7 @@ const Signup = ({ navigation }: any) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<signUpValues>({
+  } = useForm<SignUpValues>({
     mode: "onBlur",
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -55,7 +54,7 @@ const Signup = ({ navigation }: any) => {
       confirmPassword: "",
     },
   });
-  const onSubmit: SubmitHandler<signUpValues> = (data) => {
+  const onSubmit: SubmitHandler<SignUpValues> = (data) => {
     console.log(data);
     setIsSubmitting(true);
     signup(data, {
@@ -174,7 +173,7 @@ const Signup = ({ navigation }: any) => {
                         onBlur={onBlur}
                         value={value}
                         textContentType="password"
-                        secureTextEntry={true}
+                        secureTextEntry
                         className="bg-white px-2 h-14 text-xl  "
                         style={{
                           borderRadius: 10,
@@ -201,7 +200,7 @@ const Signup = ({ navigation }: any) => {
                         onBlur={onBlur}
                         value={value}
                         textContentType="password"
-                        secureTextEntry={true}
+                        secureTextEntry
                         className="bg-white px-2 h-14 text-xl  "
                         style={{
                           borderRadius: 10,
@@ -247,6 +246,6 @@ const Signup = ({ navigation }: any) => {
       </SafeView>
     </AuthLayout>
   );
-};
+}
 
 export default Signup;

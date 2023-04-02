@@ -7,24 +7,24 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
 import AuthLayout from "../../components/Auth/AuthLayout";
 import SafeView from "../../components/General/SafeView";
 import Logo from "../../components/General/Logo";
 import Button from "../../components/Buttons/Button";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useLoginMutation } from "../../hooks/mutations/auth/useLoginMutation";
-import { AxiosError } from "axios";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
   password: z.string().min(1, { message: "Please enter your password" }),
 });
 
-type signInValues = z.infer<typeof signInSchema>;
+type SignInValues = z.infer<typeof signInSchema>;
 
-const Signin = ({ navigation }: any) => {
+function Signin({ navigation }: any) {
   const { mutate: login } = useLoginMutation();
   const [signInError, setSignInError] = React.useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
@@ -34,7 +34,7 @@ const Signin = ({ navigation }: any) => {
     handleSubmit,
 
     formState: { errors },
-  } = useForm<signInValues>({
+  } = useForm<SignInValues>({
     mode: "onBlur",
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -42,7 +42,7 @@ const Signin = ({ navigation }: any) => {
       password: "",
     },
   });
-  const onSubmit: SubmitHandler<signInValues> = (data) => {
+  const onSubmit: SubmitHandler<SignInValues> = (data) => {
     console.log(data);
     setIsSubmitting(true);
     login(data, {
@@ -119,7 +119,7 @@ const Signin = ({ navigation }: any) => {
                         onBlur={onBlur}
                         value={value}
                         textContentType="password"
-                        secureTextEntry={true}
+                        secureTextEntry
                         className="bg-white px-2 h-12 text-xl "
                         style={{
                           borderRadius: 10,
@@ -165,6 +165,6 @@ const Signin = ({ navigation }: any) => {
       </SafeView>
     </AuthLayout>
   );
-};
+}
 
 export default Signin;
