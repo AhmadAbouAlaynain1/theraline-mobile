@@ -16,8 +16,8 @@ export const useLoginMutation = () => {
   return useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      setAccessToken(data.data.accessToken);
-      setRefreshToken(data.data.refreshToken);
+      setAccessToken(data.data.access_token);
+      setRefreshToken(data.data.refresh_token);
       setIsAuthenticated(true);
     },
     onError: (error) => {

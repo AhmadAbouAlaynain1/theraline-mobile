@@ -5,6 +5,7 @@ import Reports from "./Reports/Reports";
 import Private from "./Private/Private";
 import Articles from "./Articles/Articles";
 import Groups from "./Groups/Groups";
+import { useChatSocket } from "../hooks/queries/websockets/useChatSocket";
 
 function TabBarIcon({ color, size, route }: any) {
   if (route.name === "groups") {
@@ -23,6 +24,8 @@ function TabBarIcon({ color, size, route }: any) {
 
 const Tab = createBottomTabNavigator();
 function Home() {
+  useChatSocket();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
