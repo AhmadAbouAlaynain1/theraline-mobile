@@ -2,7 +2,6 @@ import React from "react";
 import {
   Text,
   View,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -11,10 +10,13 @@ import { z } from "zod";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
+import * as ImagePicker from "expo-image-picker";
 import AuthLayout from "../../components/auth/AuthLayout";
 import SafeView from "../../components/general/SafeView";
 import Button from "../../components/buttons/Button";
 import { useSignUpMutation } from "../../hooks/mutations/auth/useSignUpMutation";
+import TextInputWithLabel from "../../components/inputs/TextInputWithLabel";
+import useNotificationStore from "../../hooks/stores/useNotificationStore";
 
 const signUpSchema = z
   .object({
@@ -36,7 +38,10 @@ const signUpSchema = z
 type SignUpValues = z.infer<typeof signUpSchema>;
 
 function Signup({ navigation }: any) {
+  const { expoPushToken } = useNotificationStore();
   const [signUpError, setSignUpError] = React.useState<string | null>(null);
+  const [image, setImage] = React.useState<string | undefined>(undefined);
+
   const { mutate: signup, isLoading: isSigningUp } = useSignUpMutation();
   const {
     control,
@@ -54,7 +59,14 @@ function Signup({ navigation }: any) {
     },
   });
   const onSubmit: SubmitHandler<SignUpValues> = (data) => {
-    signup(data, {
+    const dataToSend = {
+      ...data,
+      expoToken: expoPushToken,
+      image,
+    };
+    console.log(dataToSend);
+
+    signup(dataToSend, {
       onSuccess() {
         navigation.navigate("signin");
       },
@@ -64,6 +76,28 @@ function Signup({ navigation }: any) {
         }
       },
     });
+  };
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64: true,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      const base64Img = `data:image/jpg;base64,${result.assets?.[0].base64}`;
+      setImage(base64Img);
+    }
+  };
+
+  const removeImage = () => {
+    setImage(undefined);
   };
 
   return (
@@ -80,136 +114,84 @@ function Signup({ navigation }: any) {
                   borderRadius: 10,
                   backgroundColor: "rgba(0,0,0,0.2)",
                 }}>
-                <View className=" space-y-1">
-                  <Text className="text-xl font-semibold text-white">
-                    First Name
-                  </Text>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        className="h-14 bg-white px-2 text-xl  "
-                        style={{
-                          borderRadius: 10,
-                        }}
-                      />
-                    )}
-                    name="firstName"
-                  />
-                  {errors.firstName && (
-                    <Text className="text-rose-400">
-                      {errors.firstName?.message}
-                    </Text>
+                <Controller
+                  control={control}
+                  name="firstName"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInputWithLabel
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      errorMessage={errors.firstName?.message}
+                      labelText="First Name"
+                    />
                   )}
-                </View>
-                <View className=" space-y-1">
-                  <Text className="text-xl font-semibold text-white">
-                    Last Name
-                  </Text>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        className="h-14 bg-white px-2 text-xl  "
-                        style={{
-                          borderRadius: 10,
-                        }}
-                      />
-                    )}
-                    name="lastName"
-                  />
-                  {errors.lastName && (
-                    <Text className="text-rose-400">
-                      {errors.lastName?.message}
-                    </Text>
+                />
+                <Controller
+                  control={control}
+                  name="lastName"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInputWithLabel
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      errorMessage={errors.lastName?.message}
+                      labelText="Last Name"
+                    />
                   )}
-                </View>
-                <View className=" space-y-1">
-                  <Text className="text-xl font-semibold text-white">
-                    Email
-                  </Text>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        className="h-14 bg-white px-2  text-xl  "
-                        style={{
-                          borderRadius: 10,
-                        }}
-                        textContentType="emailAddress"
-                      />
-                    )}
-                    name="email"
-                  />
-                  {errors.email && (
-                    <Text className="text-rose-400">
-                      {errors.email?.message}
-                    </Text>
+                />
+                <Controller
+                  control={control}
+                  name="email"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInputWithLabel
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      errorMessage={errors.email?.message}
+                      labelText="Email"
+                      textContentType="emailAddress"
+                    />
                   )}
-                </View>
-                <View className="space-y-1">
-                  <Text className="text-xl font-semibold text-white">
-                    Password
-                  </Text>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        textContentType="password"
-                        secureTextEntry
-                        className="h-14 bg-white px-2 text-xl  "
-                        style={{
-                          borderRadius: 10,
-                        }}
-                      />
-                    )}
-                    name="password"
-                  />
-                  {errors.password && (
-                    <Text className="text-rose-400">
-                      {errors.password?.message}
-                    </Text>
+                />
+
+                <Controller
+                  control={control}
+                  name="password"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInputWithLabel
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      secureTextEntry
+                      textContentType="password"
+                      errorMessage={errors.password?.message}
+                      labelText="Password"
+                    />
                   )}
-                </View>
-                <View className="space-y-1">
-                  <Text className="text-xl font-semibold text-white">
-                    Confirm Password
-                  </Text>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        textContentType="password"
-                        secureTextEntry
-                        className="h-14 bg-white px-2 text-xl  "
-                        style={{
-                          borderRadius: 10,
-                        }}
-                      />
-                    )}
-                    name="confirmPassword"
-                  />
-                  {errors.confirmPassword && (
-                    <Text className="text-rose-400">
-                      {errors.confirmPassword?.message}
-                    </Text>
+                />
+                <Controller
+                  control={control}
+                  name="confirmPassword"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInputWithLabel
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      secureTextEntry
+                      textContentType="password"
+                      errorMessage={errors.confirmPassword?.message}
+                      labelText="Confirm Password"
+                    />
                   )}
-                </View>
+                />
+                <Button
+                  classNames="mt-4"
+                  onPress={image ? removeImage : pickImage}
+                  fill={false}
+                  textClassNames="text-base font-semi">
+                  {image ? "Remove Image" : "Upload Profile Image"}
+                </Button>
                 <Text className="text-center text-rose-400">{signUpError}</Text>
               </View>
               <Text className="text-center text-xl font-bold text-white">
@@ -223,7 +205,7 @@ function Signup({ navigation }: any) {
                   onPress={() => {
                     navigation.navigate("signin");
                   }}>
-                  <Text className="text-center text-primaryLight">Sign Up</Text>
+                  <Text className="text-center text-primaryLight">Sign In</Text>
                 </Pressable>
               </View>
             </View>
@@ -232,7 +214,7 @@ function Signup({ navigation }: any) {
               classNames="w-[80%]"
               loading={isSigningUp}
               onPress={handleSubmit(onSubmit)}>
-              Log in
+              Sign up
             </Button>
           </View>
         </KeyboardAvoidingView>

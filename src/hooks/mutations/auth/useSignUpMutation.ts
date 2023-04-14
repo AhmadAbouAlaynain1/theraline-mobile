@@ -6,20 +6,23 @@ const signUpUser = async ({
   password,
   firstName,
   lastName,
-  confirmPassword,
+  expoToken,
+  image,
 }: {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
-  confirmPassword: string;
+  expoToken: string | undefined;
+  image: string | undefined;
 }) => {
   return accessClient.post("/auth/signup", {
     email,
     password,
     firstName,
     lastName,
-    confirmPassword,
+    expoToken,
+    image,
   });
 };
 

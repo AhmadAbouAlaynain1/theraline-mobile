@@ -1,8 +1,10 @@
 import React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { io } from "socket.io-client";
-import { refreshToken, baseURL } from "../../../utils/axios/axios";
+import { refreshToken } from "../../../utils/axios/axios";
 import useAuthStore from "../../stores/useAuthStore";
+
+const baseURL = "https://theraline.onrender.com";
 
 export const useChatSocket = () => {
   const queryClient = useQueryClient();

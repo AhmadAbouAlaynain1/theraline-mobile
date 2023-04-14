@@ -3,7 +3,6 @@ import {
   Text,
   View,
   Pressable,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
@@ -16,6 +15,7 @@ import SafeView from "../../components/general/SafeView";
 import Logo from "../../components/general/Logo";
 import Button from "../../components/buttons/Button";
 import { useLoginMutation } from "../../hooks/mutations/auth/useLoginMutation";
+import TextInputWithLabel from "../../components/inputs/TextInputWithLabel";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
@@ -65,70 +65,49 @@ function Signin({ navigation }: any) {
             <View className="flex-col gap-5">
               <Logo />
               <Text className="text-center text-5xl font-bold text-white">
-                Hello
+                Welcome Back
               </Text>
             </View>
 
             <View className="flex w-[80%] flex-col gap-5">
               <View
-                className=" flex  flex-col space-y-4 p-4 "
+                className="flex flex-col gap-4 p-4 "
                 style={{
                   backgroundColor: "rgba(0,0,0,0.2)",
                   borderRadius: 20,
                 }}>
-                <View className="space-y-1">
-                  <Text className="text-xl font-semibold text-white">
-                    Email
-                  </Text>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        className="h-12 bg-white px-2 text-xl "
-                        style={{
-                          borderRadius: 10,
-                        }}
-                        textContentType="emailAddress"
-                      />
-                    )}
-                    name="email"
-                  />
-                  {errors.email && (
-                    <Text className="text-rose-400">
-                      {errors.email?.message}
-                    </Text>
+                <Controller
+                  control={control}
+                  name="email"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInputWithLabel
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      labelText="Email"
+                      errorMessage={
+                        errors.email ? errors.email?.message : undefined
+                      }
+                    />
                   )}
-                </View>
-                <View className=" space-y-1">
-                  <Text className="text-xl font-semibold text-white">
-                    Password
-                  </Text>
-                  <Controller
-                    control={control}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                      <TextInput
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        value={value}
-                        textContentType="password"
-                        secureTextEntry
-                        className="h-12 bg-white px-2 text-xl "
-                        style={{
-                          borderRadius: 10,
-                        }}
-                      />
-                    )}
-                    name="password"
-                  />
-                  {errors.password && (
-                    <Text className="text-rose-400">
-                      {errors.password?.message}
-                    </Text>
+                />
+                <Controller
+                  control={control}
+                  name="password"
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInputWithLabel
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      value={value}
+                      textContentType="password"
+                      secureTextEntry
+                      labelText="Password"
+                      errorMessage={
+                        errors.password ? errors.password?.message : undefined
+                      }
+                    />
                   )}
-                </View>
+                />
                 <Text className="text-rose-400">{signInError}</Text>
               </View>
               <Text className="text-center text-xl font-bold text-white">
@@ -148,6 +127,7 @@ function Signin({ navigation }: any) {
             </View>
 
             <Button
+              variant={isSigningIn ? "disabled" : "default"}
               disabled={isSigningIn}
               classNames="w-[80%]"
               loading={isSigningIn}

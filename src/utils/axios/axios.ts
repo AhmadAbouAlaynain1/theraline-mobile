@@ -4,7 +4,7 @@ import useAuthStore from "../../hooks/stores/useAuthStore";
 const { setAccessToken, setRefreshToken } = useAuthStore.getState();
 const { setIsAuthenticated } = useAuthStore.getState();
 
-export const baseURL = "https://theraline.onrender.com";
+export const baseURL = "https://theraline-backend-api.vercel.app";
 
 const refreshClient = axios.create({
   baseURL,

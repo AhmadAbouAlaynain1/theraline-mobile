@@ -6,9 +6,8 @@ import { cn } from "../../utils/utilFns";
 const buttonVariants = cva("flex h-fit items-center justify-center", {
   variants: {
     variant: {
-      default:
-        "bg-primary text-white hover:bg-slate-700 dark:bg-slate-50 dark:text-slate-900",
-      disabled: "bg-primary-light text-gray-500",
+      default: "bg-primary text-white hover:bg-slate-700",
+      disabled: "bg-primaryLight text-gray-500",
     },
     size: {
       full: "p-4",
@@ -32,8 +31,6 @@ const buttonVariants = cva("flex h-fit items-center justify-center", {
   },
 });
 
-const textVariants = cva("text-center text-xl font-bold text-white");
-
 type ButtonProps = {
   classNames?: string;
   textClassNames?: string;
@@ -41,8 +38,7 @@ type ButtonProps = {
   onPress: () => void;
   disabled?: boolean;
   loading?: boolean;
-} & VariantProps<typeof buttonVariants> &
-  VariantProps<typeof textVariants>;
+} & VariantProps<typeof buttonVariants>;
 
 function Button({
   disabled,
@@ -59,7 +55,11 @@ function Button({
       className={cn(buttonVariants({ variant, size }), classNames)}
       onPress={onPress}
       disabled={disabled}>
-      <Text className={cn(textVariants(), textClassNames)}>
+      <Text
+        className={cn(
+          "text-center text-xl font-bold text-white",
+          textClassNames,
+        )}>
         {loading ? "Loading..." : children}
       </Text>
     </Pressable>
