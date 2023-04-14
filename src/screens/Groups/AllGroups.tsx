@@ -1,6 +1,6 @@
 import React from "react";
 import { View, FlatList } from "react-native";
-import GroupCell from "../../components/Groups/GroupCell";
+import GroupCell from "../../components/groups/GroupCell";
 
 const mockData = [
   {

@@ -9,7 +9,7 @@ type ArticleItemProps = {
 function ArticleItem({ item, navigation }: ArticleItemProps) {
   return (
     <Pressable
-      className="p-4 bg-white my-4 mx-2 flex gap-2"
+      className="my-4 mx-2 flex gap-2 bg-white p-4"
       style={{
         borderRadius: 15,
       }}

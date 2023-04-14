@@ -10,7 +10,7 @@ const GroupStack = createNativeStackNavigator();
 function Header({ search, setSearch, insets }: any) {
   return (
     <SafeAreaView
-      className="flex flex-row justify-between mx-4 items-center"
+      className="mx-4 flex flex-row items-center justify-between"
       style={{
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
@@ -19,13 +19,13 @@ function Header({ search, setSearch, insets }: any) {
         placeholder="Search..."
         value={search}
         onChangeText={(text) => setSearch(text)}
-        className="w-[80%] p-4 shadow-lg border-gray-100 bg-white "
+        className="w-[80%] border-gray-100 bg-white p-4 shadow-lg "
         style={{
           borderRadius: 10,
         }}
       />
       <Image
-        className="w-12 h-12"
+        className="h-12 w-12"
         style={{
           borderRadius: 50,
         }}

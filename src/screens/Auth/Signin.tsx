@@ -11,10 +11,10 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
-import AuthLayout from "../../components/Auth/AuthLayout";
-import SafeView from "../../components/General/SafeView";
-import Logo from "../../components/General/Logo";
-import Button from "../../components/Buttons/Button";
+import AuthLayout from "../../components/auth/AuthLayout";
+import SafeView from "../../components/general/SafeView";
+import Logo from "../../components/general/Logo";
+import Button from "../../components/buttons/Button";
 import { useLoginMutation } from "../../hooks/mutations/auth/useLoginMutation";
 
 const signInSchema = z.object({
@@ -25,14 +25,12 @@ const signInSchema = z.object({
 type SignInValues = z.infer<typeof signInSchema>;
 
 function Signin({ navigation }: any) {
-  const { mutate: login } = useLoginMutation();
+  const { mutate: login, isLoading: isSigningIn } = useLoginMutation();
   const [signInError, setSignInError] = React.useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const {
     control,
     handleSubmit,
-
     formState: { errors },
   } = useForm<SignInValues>({
     mode: "onBlur",
@@ -42,16 +40,13 @@ function Signin({ navigation }: any) {
       password: "",
     },
   });
+
   const onSubmit: SubmitHandler<SignInValues> = (data) => {
-    console.log(data);
-    setIsSubmitting(true);
     login(data, {
       onSuccess: () => {
-        setIsSubmitting(false);
         setSignInError(null);
       },
       onError: (error) => {
-        setIsSubmitting(false);
         console.log(error);
         if (error instanceof AxiosError) {
           setSignInError(error?.response?.data.message);
@@ -66,23 +61,23 @@ function Signin({ navigation }: any) {
         <KeyboardAvoidingView
           className="flex-1"
           behavior={Platform.OS === "ios" ? "padding" : "height"}>
-          <View className="flex-1 flex-col justify-between items-center pt-[40] pb-[40] ">
+          <View className="flex-1 flex-col items-center justify-between py-[40]">
             <View className="flex-col gap-5">
               <Logo />
-              <Text className="text-white text-center text-5xl font-bold">
+              <Text className="text-center text-5xl font-bold text-white">
                 Hello
               </Text>
             </View>
 
-            <View className="flex flex-col gap-5 w-[80%]">
+            <View className="flex w-[80%] flex-col gap-5">
               <View
-                className=" p-4  flex flex-col space-y-4 "
+                className=" flex  flex-col space-y-4 p-4 "
                 style={{
                   backgroundColor: "rgba(0,0,0,0.2)",
                   borderRadius: 20,
                 }}>
-                <View className=" space-y-1">
-                  <Text className="text-white text-xl font-semibold">
+                <View className="space-y-1">
+                  <Text className="text-xl font-semibold text-white">
                     Email
                   </Text>
                   <Controller
@@ -92,7 +87,7 @@ function Signin({ navigation }: any) {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        className="bg-white px-2 h-12 text-xl "
+                        className="h-12 bg-white px-2 text-xl "
                         style={{
                           borderRadius: 10,
                         }}
@@ -108,7 +103,7 @@ function Signin({ navigation }: any) {
                   )}
                 </View>
                 <View className=" space-y-1">
-                  <Text className="text-white text-xl font-semibold">
+                  <Text className="text-xl font-semibold text-white">
                     Password
                   </Text>
                   <Controller
@@ -120,7 +115,7 @@ function Signin({ navigation }: any) {
                         value={value}
                         textContentType="password"
                         secureTextEntry
-                        className="bg-white px-2 h-12 text-xl "
+                        className="h-12 bg-white px-2 text-xl "
                         style={{
                           borderRadius: 10,
                         }}
@@ -136,29 +131,28 @@ function Signin({ navigation }: any) {
                 </View>
                 <Text className="text-rose-400">{signInError}</Text>
               </View>
-              <Text className="font-bold text-xl text-white text-center">
+              <Text className="text-center text-xl font-bold text-white">
                 Log in as a Doctor or Patient
               </Text>
-              <View className="text-white text-center flex-row justify-center">
-                <Text className="text-white text-center">
+              <View className="flex-row justify-center text-center text-white">
+                <Text className="text-center text-white">
                   Are you a patient?
                 </Text>
                 <Pressable
                   onPress={() => {
                     navigation.navigate("signup");
                   }}>
-                  <Text className="text-primaryLight text-center">Sign up</Text>
+                  <Text className="text-center text-primaryLight">Sign up</Text>
                 </Pressable>
               </View>
             </View>
+
             <Button
-              classNames={`${
-                isSubmitting ? "bg-primaryLight" : "bg-primary"
-              } self-stretch w-[80%] mx-auto`}
-              disabled={isSubmitting}
-              textClassNames="text-white text-2xl font-bold"
+              disabled={isSigningIn}
+              classNames="w-[80%]"
+              loading={isSigningIn}
               onPress={handleSubmit(onSubmit)}>
-              {isSubmitting ? "Loading..." : "Log in"}
+              Log in
             </Button>
           </View>
         </KeyboardAvoidingView>

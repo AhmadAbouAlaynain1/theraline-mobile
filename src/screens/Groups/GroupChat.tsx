@@ -52,11 +52,11 @@ function GroupChat() {
     <KeyboardAvoidingView
       keyboardVerticalOffset={100}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex flex-1 flex-col justify-end items-end ">
+      className="flex flex-1 flex-col items-end justify-end ">
       <View className="w-full flex-1">
         {/* Flat List With Messages inside */}
         <FlatList
-          className="w-full h-full"
+          className="h-full w-full"
           contentContainerStyle={{
             height: "100%",
             justifyContent: "flex-start",
@@ -66,7 +66,7 @@ function GroupChat() {
           data={messages}
           renderItem={({ item }) => (
             <View
-              className={`w-full flex flex-row p-4 ${
+              className={`flex w-full flex-row p-4 ${
                 item.isMe ? "justify-end" : "justify-start"
               }`}>
               <View
@@ -100,9 +100,9 @@ function GroupChat() {
           ItemSeparatorComponent={ItemSeperator}
         />
       </View>
-      <View className="w-full h-16 flex p-2 flex-row items-center justify-center">
+      <View className="flex h-16 w-full flex-row items-center justify-center p-2">
         <TextInput
-          className="w-[80%] p-3 bg-white "
+          className="w-[80%] bg-white p-3 "
           style={{
             borderRadius: 10,
           }}
@@ -112,7 +112,7 @@ function GroupChat() {
         />
 
         <Pressable
-          className="w-[20%] flex items-center"
+          className="flex w-[20%] items-center"
           onPress={() => {
             console.log("New Message Sent");
           }}>

@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import useAuthStore from "../../hooks/stores/useAuthStore";
 
-const { setAccessToken } = useAuthStore.getState();
+const { setAccessToken, setRefreshToken } = useAuthStore.getState();
 const { setIsAuthenticated } = useAuthStore.getState();
 
 export const baseURL = "https://theraline.onrender.com";
@@ -14,9 +14,12 @@ const refreshClient = axios.create({
   },
 });
 
-export const refreshToken = async () => {
+export const refreshToken = async (): Promise<{
+  access_token: string;
+  refresh_token: string;
+}> => {
   const res = await refreshClient.post("/auth/refresh");
-  return res.data.access_token;
+  return res.data;
 };
 
 export const accessClient = axios.create({
@@ -45,10 +48,11 @@ accessClient.interceptors.response.use(
     const { status } = error.response;
     if (status === 401 && useAuthStore.getState().refreshToken) {
       try {
-        const newAccessToken = await refreshToken();
-        setAccessToken(newAccessToken);
+        const accessTokens = await refreshToken();
+        setAccessToken(accessTokens.access_token);
+        setRefreshToken(accessTokens.refresh_token);
         const { config } = error;
-        config.headers.common.Authorization = `Bearer ${newAccessToken}`;
+        config.headers.common.Authorization = `Bearer ${accessTokens.access_token}`;
         return await axios(config);
       } catch (err) {
         setIsAuthenticated(false);

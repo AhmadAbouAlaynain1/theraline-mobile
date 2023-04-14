@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Pressable, FlatList } from "react-native";
-import ArticleItem from "../../components/Articles/ArticleItem";
+import ArticleItem from "../../components/articles/ArticleItem";
 
 const mockArticles = [
   {
@@ -50,9 +50,9 @@ const mockFilters = ["All", "Top", "Trending"];
 function AllArticles({ navigation }: any) {
   const [filter, setFilter] = React.useState("All");
   return (
-    <View className="flex flex-1 w-full">
+    <View className="flex w-full flex-1">
       {/* Render Filter Tags here can be pressed and changes filter state */}
-      <View className=" flex-row gap-4 items-center justify-center mt-1 mb-2">
+      <View className=" mt-1 mb-2 flex-row items-center justify-center gap-4">
         {mockFilters.map((item) => (
           <Pressable
             className={`${

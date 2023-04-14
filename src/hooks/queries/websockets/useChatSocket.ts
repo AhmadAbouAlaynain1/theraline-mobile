@@ -6,9 +6,10 @@ import useAuthStore from "../../stores/useAuthStore";
 
 export const useChatSocket = () => {
   const queryClient = useQueryClient();
+  const { setAccessToken, setRefreshToken, accessToken } =
+    useAuthStore.getState();
   React.useEffect(() => {
-    const { accessToken, setAccessToken } = useAuthStore.getState();
-    const websocket = io(`${baseURL}/chat?accessToken=${accessToken}`);
+    let websocket = io(`${baseURL}/chat?accessToken=${accessToken}`);
 
     // log when the connection is established
     websocket.on("connect", () => {
@@ -18,8 +19,12 @@ export const useChatSocket = () => {
     // refresh token if error occurs
     websocket.on("error", async (error) => {
       console.log(error);
-      const newAccessToken = await refreshToken();
-      setAccessToken(newAccessToken);
+      const accessTokens = await refreshToken();
+      setAccessToken(accessTokens.access_token);
+      setRefreshToken(accessTokens.refresh_token);
+      websocket = io(
+        `${baseURL}/chat?accessToken=${accessTokens.access_token}`,
+      );
     });
 
     websocket.on("newMessage", (data) => {
@@ -29,5 +34,5 @@ export const useChatSocket = () => {
     return () => {
       websocket.close();
     };
-  }, [queryClient]);
+  }, [queryClient, setRefreshToken, setAccessToken, accessToken]);
 };

@@ -10,7 +10,7 @@ function GroupCell({ id, name, navigation }: any) {
   };
   return (
     <Pressable
-      className="p-4 flex flex-row gap-2 h-28 w-full justify-between bg-white "
+      className="flex h-28 w-full flex-row justify-between gap-2 bg-white p-4 "
       style={{
         borderRadius: 30,
         overflow: "hidden",
@@ -20,26 +20,26 @@ function GroupCell({ id, name, navigation }: any) {
         navigation.navigate("groupChat", dataToSend);
       }}>
       <Image
-        className="w-[20%] h-full  self-center "
+        className="h-full w-[20%]  self-center "
         style={{
           borderRadius: 50,
         }}
         source={bgImage}
       />
-      <View className="flex flex-col justify-between w-[60%]">
+      <View className="flex w-[60%] flex-col justify-between">
         <Text className="font-bold">Group Name</Text>
         <Text className="text-gray-400">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nobis!
         </Text>
       </View>
-      <View className="flex flex-col justify-between items-center">
-        <Text className="text-gray-400 text-center">12:14pm</Text>
+      <View className="flex flex-col items-center justify-between">
+        <Text className="text-center text-gray-400">12:14pm</Text>
         <View
-          className=" bg-primary w-8 "
+          className=" w-8 bg-primary "
           style={{
             borderRadius: 50,
           }}>
-          <Text className="text-center text-white text-xl">12</Text>
+          <Text className="text-center text-xl text-white">12</Text>
         </View>
       </View>
     </Pressable>
