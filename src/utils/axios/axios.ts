@@ -18,6 +18,9 @@ export const refreshToken = async (): Promise<{
   access_token: string;
   refresh_token: string;
 }> => {
+  refreshClient.defaults.headers.Authorization = `Bearer ${
+    useAuthStore.getState().refreshToken
+  }`;
   const res = await refreshClient.post("/auth/refresh");
   return res.data;
 };

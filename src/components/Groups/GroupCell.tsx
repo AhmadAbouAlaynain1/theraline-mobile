@@ -1,12 +1,12 @@
 import React from "react";
 import { Image, View, Text, Pressable } from "react-native";
+import { Chat } from "../../hooks/queries/chats/useGetChats";
 
-const bgImage = require("../../../assets/bgAuth.png");
-
-function GroupCell({ id, name, navigation }: any) {
+function GroupCell({ chat, navigation }: { chat: Chat; navigation: any }) {
+  const imageURL = chat.groupImage;
   const dataToSend = {
-    id,
-    name,
+    chatId: chat._id,
+    chatName: chat.name,
   };
   return (
     <Pressable
@@ -16,31 +16,45 @@ function GroupCell({ id, name, navigation }: any) {
         overflow: "hidden",
       }}
       onPress={() => {
-        console.log("Pressed");
         navigation.navigate("groupChat", dataToSend);
       }}>
-      <Image
-        className="h-full w-[20%]  self-center "
-        style={{
-          borderRadius: 50,
-        }}
-        source={bgImage}
-      />
-      <View className="flex w-[60%] flex-col justify-between">
-        <Text className="font-bold">Group Name</Text>
-        <Text className="text-gray-400">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nobis!
+      {imageURL ? (
+        <Image
+          className="h-[70] w-[70]  self-center "
+          style={{
+            borderRadius: 70 / 2,
+          }}
+          source={{
+            uri: imageURL,
+          }}
+        />
+      ) : (
+        <View
+          className="h-[70] w-[70] bg-gray-200 "
+          style={{
+            borderRadius: 70 / 2,
+          }}
+        />
+      )}
+
+      <View className="flex w-[55%] flex-col  ">
+        <Text className="font-bold">{chat.name}</Text>
+        <Text className="mt-2 text-gray-400">
+          {chat.latestMessage?.text
+            ? chat.latestMessage.text
+            : "Start your chat here"}
         </Text>
       </View>
       <View className="flex flex-col items-center justify-between">
-        <Text className="text-center text-gray-400">12:14pm</Text>
-        <View
-          className=" w-8 bg-primary "
-          style={{
-            borderRadius: 50,
-          }}>
-          <Text className="text-center text-xl text-white">12</Text>
-        </View>
+        <Text className="text-center text-gray-400">
+          {chat.latestMessage?.send_at
+            ? new Date(chat.latestMessage.send_at).toLocaleString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+                hour12: true,
+              })
+            : ""}
+        </Text>
       </View>
     </Pressable>
   );

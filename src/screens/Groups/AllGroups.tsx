@@ -1,54 +1,48 @@
 import React from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, Text } from "react-native";
 import GroupCell from "../../components/groups/GroupCell";
-
-const mockData = [
-  {
-    id: 1,
-    name: "Group 1",
-    lastMessage:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nobis!",
-    time: "12:14pm",
-    unreadMessages: 12,
-    image: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
-  },
-  {
-    id: 2,
-    name: "Group 2",
-    lastMessage:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nobis!",
-    time: "12:14pm",
-    unreadMessages: 12,
-    image: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
-  },
-  {
-    id: 3,
-    name: "Group 3",
-    lastMessage:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, nobis!",
-    time: "12:14pm",
-    unreadMessages: 12,
-    image: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
-  },
-];
+import useGetChats from "../../hooks/queries/chats/useGetChats";
 
 function ItemSeperator() {
-  return <View className="h-4" />;
+  return <View className="h-6" />;
 }
 
 function AllGroups({ navigation }: any) {
+  const { data: groups, isLoading, isError } = useGetChats();
+
+  if (isLoading) {
+    return (
+      <View className="flex h-full items-center justify-center">
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+  if (isError) {
+    return (
+      <View className="flex h-full items-center justify-center">
+        <Text>An Error has occured</Text>
+      </View>
+    );
+  }
+
   return (
     <View className="m-4 flex items-center">
-      <FlatList
-        className="min-h-full"
-        directionalLockEnabled
-        data={mockData}
-        renderItem={({ item }) => (
-          <GroupCell {...item} navigation={navigation} />
-        )}
-        keyExtractor={(item) => item.id.toString()}
-        ItemSeparatorComponent={ItemSeperator}
-      />
+      {groups.length === 0 ? (
+        <View className="flex h-full items-center justify-center">
+          <Text className="text-2xl">No Groups</Text>
+        </View>
+      ) : (
+        <FlatList
+          className="min-h-full"
+          directionalLockEnabled
+          data={groups}
+          renderItem={({ item }) => (
+            <GroupCell chat={item} navigation={navigation} />
+          )}
+          keyExtractor={(item) => item._id.toString()}
+          ItemSeparatorComponent={ItemSeperator}
+        />
+      )}
     </View>
   );
 }

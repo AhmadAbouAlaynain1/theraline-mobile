@@ -26,6 +26,7 @@
     "react/react-in-jsx-scope": "off",
     "no-console": "off",
     "import/no-extraneous-dependencies": "off",
-    "tailwindcss/no-custom-classname": "off"
+    "tailwindcss/no-custom-classname": "off",
+    "no-underscore-dangle": "off"
   }
 }
