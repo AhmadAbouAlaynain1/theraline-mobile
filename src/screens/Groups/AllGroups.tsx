@@ -33,7 +33,7 @@ function AllGroups({ navigation }: any) {
         </View>
       ) : (
         <FlatList
-          className="min-h-full"
+          className="min-h-full w-full"
           directionalLockEnabled
           data={groups}
           renderItem={({ item }) => (

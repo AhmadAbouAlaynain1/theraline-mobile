@@ -13,11 +13,12 @@ import useGetMessages from "../../hooks/queries/chats/useGetMessages";
 import { useSendMessage } from "../../hooks/mutations/groups/useSendMessage";
 
 function ItemSeperator() {
-  return <View className="h-4" />;
+  return <View className="h-1" />;
 }
 
-function GroupChat({ route }: any) {
-  const { chatId } = route.params;
+function GroupChat({ route, navigation }: any) {
+  const { chatId, chatName } = route.params;
+  navigation.setOptions({ title: chatName });
   const {
     data: messages,
     isLoading,
@@ -30,6 +31,7 @@ function GroupChat({ route }: any) {
   });
 
   const [textMessage, setTextMessage] = React.useState("");
+  const flatListRef = React.useRef<FlatList>(null);
 
   if (isLoading) {
     return (
@@ -62,6 +64,12 @@ function GroupChat({ route }: any) {
       <View className="w-full flex-1">
         {/* Flat List With Messages inside */}
         <FlatList
+          ref={flatListRef}
+          onContentSizeChange={() => {
+            flatListRef.current?.scrollToEnd({
+              animated: true,
+            });
+          }}
           className="h-full w-full"
           directionalLockEnabled
           data={messages}

@@ -10,7 +10,7 @@ function GroupCell({ chat, navigation }: { chat: Chat; navigation: any }) {
   };
   return (
     <Pressable
-      className="flex h-28 w-full flex-row justify-between gap-2 bg-white p-4 "
+      className="flex h-28 w-full flex-row justify-start  bg-white p-4 "
       style={{
         borderRadius: 30,
         overflow: "hidden",
@@ -20,9 +20,9 @@ function GroupCell({ chat, navigation }: { chat: Chat; navigation: any }) {
       }}>
       {imageURL ? (
         <Image
-          className="h-[70] w-[70]  self-center "
+          className="h-[80] w-[80]  self-center "
           style={{
-            borderRadius: 70 / 2,
+            borderRadius: 80 / 2,
           }}
           source={{
             uri: imageURL,
@@ -30,14 +30,14 @@ function GroupCell({ chat, navigation }: { chat: Chat; navigation: any }) {
         />
       ) : (
         <View
-          className="h-[70] w-[70] bg-gray-200 "
+          className="h-[80] w-[80] bg-gray-200 "
           style={{
-            borderRadius: 70 / 2,
+            borderRadius: 80 / 2,
           }}
         />
       )}
 
-      <View className="flex w-[55%] flex-col  ">
+      <View className="mx-2 flex flex-col">
         <Text className="font-bold">{chat.name}</Text>
         <Text className="mt-2 text-gray-400">
           {chat.latestMessage?.text
@@ -45,7 +45,7 @@ function GroupCell({ chat, navigation }: { chat: Chat; navigation: any }) {
             : "Start your chat here"}
         </Text>
       </View>
-      <View className="flex flex-col items-center justify-between">
+      <View className="ml-auto flex flex-col items-center ">
         <Text className="text-center text-gray-400">
           {chat.latestMessage?.send_at
             ? new Date(chat.latestMessage.send_at).toLocaleString("en-US", {
