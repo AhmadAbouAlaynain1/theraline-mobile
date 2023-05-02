@@ -1,10 +1,18 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View, useWindowDimensions } from "react-native";
+import RenderHtml from "react-native-render-html";
 
-function Article() {
+function Article({ route }: any) {
+  const data = route.params;
+  const { width } = useWindowDimensions();
+  console.log(data.item.content);
+  const source = {
+    html: data.item.content,
+  };
+
   return (
-    <View className="flex-1">
-      <Text>Article</Text>
+    <View className="flex-1 bg-white p-4">
+      <RenderHtml contentWidth={width} source={source} />
     </View>
   );
 }

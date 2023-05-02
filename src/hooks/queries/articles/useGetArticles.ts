@@ -2,24 +2,26 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { accessClient } from "../../../utils/axios/axios";
 
-const getArticles = async (): Promise<
+const getArticles = (): Promise<
   AxiosResponse<{
     docs: {
       _id: string;
       title: string;
-      date: Date;
+      date: string;
       content: string;
     }[];
   }>
 > => {
-  const res = await accessClient.get("/articles/get_articles");
-  return res.data;
+  return accessClient.get("/articles/get_articles");
 };
 
 export const useGetArticles = () => {
   return useQuery({
     queryKey: ["articles"],
-    select: (data) => data.data.docs,
+    select: (data) => {
+      console.log(data);
+      return data.data.docs;
+    },
     queryFn: getArticles,
   });
 };
