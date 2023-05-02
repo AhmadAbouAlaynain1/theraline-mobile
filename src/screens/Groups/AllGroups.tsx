@@ -25,6 +25,8 @@ function AllGroups({ navigation }: any) {
     );
   }
 
+  console.log(groups);
+
   return (
     <View className="m-4 flex items-center">
       {groups.length === 0 ? (
@@ -35,7 +37,7 @@ function AllGroups({ navigation }: any) {
         <FlatList
           className="min-h-full w-full"
           directionalLockEnabled
-          data={groups}
+          data={groups.filter((group) => group.groupType === "GROUP")}
           renderItem={({ item }) => (
             <GroupCell chat={item} navigation={navigation} />
           )}

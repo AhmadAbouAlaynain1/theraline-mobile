@@ -10,11 +10,11 @@ const getAppointments = (): Promise<
       doctor_id: string;
       start_date: Date;
       end_date: Date;
-      status: string[];
+      status: string;
     }[];
   }>
 > => {
-  return accessClient.get(`/appointment/patient/appointment`);
+  return accessClient.get(`/appointment/doctor/appointment`);
 };
 
 export const useGetAppointments = () => {

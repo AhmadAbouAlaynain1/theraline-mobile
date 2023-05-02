@@ -11,7 +11,7 @@ const loginUser = async ({
 }) => accessClient.post("/auth/signin", { email, password });
 
 export const useLoginMutation = () => {
-  const { setAccessToken, setRefreshToken, setIsAuthenticated } =
+  const { setAccessToken, setRefreshToken, setIsAuthenticated, setUser } =
     useAuthStore();
   return useMutation({
     mutationFn: loginUser,
@@ -19,6 +19,7 @@ export const useLoginMutation = () => {
       setAccessToken(data.data.access_token);
       setRefreshToken(data.data.refresh_token);
       setIsAuthenticated(true);
+      setUser(data.data.role);
     },
     onError: (error) => {
       console.log(error);
