@@ -57,7 +57,7 @@ function Articles() {
       <ArticlesStack.Screen
         name="article"
         component={Article}
-        options={({ route }: any) => ({ title: route.params.name })}
+        options={() => ({ title: "Article" })}
       />
     </ArticlesStack.Navigator>
   );

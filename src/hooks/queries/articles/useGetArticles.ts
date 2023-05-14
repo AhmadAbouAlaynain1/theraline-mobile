@@ -9,6 +9,10 @@ const getArticles = (): Promise<
       title: string;
       date: string;
       content: string;
+      author: {
+        name: string;
+        image: string;
+      };
     }[];
   }>
 > => {
@@ -23,5 +27,6 @@ export const useGetArticles = () => {
       return data.data.docs;
     },
     queryFn: getArticles,
+    refetchInterval: 2000,
   });
 };

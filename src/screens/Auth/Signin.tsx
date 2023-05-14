@@ -62,7 +62,7 @@ function Signin({ navigation }: any) {
           className="flex-1"
           behavior={Platform.OS === "ios" ? "padding" : "height"}>
           <View className="flex-1 flex-col items-center justify-between py-[40]">
-            <View className="flex-col gap-5">
+            <View className="flex-col items-center gap-5">
               <Logo />
               <Text className="text-center text-5xl font-bold text-white">
                 Welcome Back

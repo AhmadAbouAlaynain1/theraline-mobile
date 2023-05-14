@@ -22,5 +22,6 @@ export const useGetAppointments = () => {
     queryKey: ["appointments"],
     select: (data) => data.data.docs,
     queryFn: getAppointments,
+    refetchInterval: 2000,
   });
 };

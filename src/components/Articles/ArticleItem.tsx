@@ -7,6 +7,10 @@ type ArticleItemProps = {
     title: string;
     date: string;
     content: string;
+    author: {
+      name: string;
+      image: string;
+    };
   };
   navigation: any;
 };
@@ -27,6 +31,9 @@ function ArticleItem({ item, navigation }: ArticleItemProps) {
         <Text className="text-xl text-gray-500">
           {new Date(item.date).toLocaleDateString()}
         </Text>
+      </View>
+      <View>
+        <Text className="text-base text-gray-500 ">By: {item.author.name}</Text>
       </View>
     </Pressable>
   );

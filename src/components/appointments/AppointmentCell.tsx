@@ -25,7 +25,7 @@ function AppointmentCell({ appointment }: { appointment: any }) {
             </Text>
           </View>
           <Text className="mb-6 w-full text-base text-gray-600">
-            {appointment.patient.fullName}
+            Patient Name: {appointment.patient.fullName}
           </Text>
         </View>
       ) : (

@@ -31,7 +31,6 @@ function AllArticles({ navigation }: any) {
   return (
     <View className="mx-4 mt-4 flex  flex-1">
       <View className="flex flex-col gap-6">
-        {/* Map through Mock Articles in a FlatList with Article Item for every component  */}
         <FlatList
           directionalLockEnabled
           data={articles}

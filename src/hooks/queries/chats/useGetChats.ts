@@ -27,6 +27,7 @@ const useGetChats = () => {
     queryKey: ["chats"],
     select: (data) => data.data,
     queryFn: getChats,
+    refetchInterval: 2000,
   });
 };
 
