@@ -6,8 +6,8 @@ const rejectAppointment = async ({
 }: {
   appointment_id: string;
 }) => {
-  return accessClient.post(
-    `/appointment/${appointment_id}/confirm_appointment`,
+  return accessClient.patch(
+    `/appointment/${appointment_id}/cancel_appointment`,
   );
 };
 

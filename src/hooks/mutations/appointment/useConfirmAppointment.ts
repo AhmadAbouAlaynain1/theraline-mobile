@@ -6,7 +6,7 @@ const confirmAppointment = async ({
 }: {
   appointment_id: string;
 }) => {
-  return accessClient.post(
+  return accessClient.patch(
     `/appointment/${appointment_id}/confirm_appointment`,
   );
 };

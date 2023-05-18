@@ -52,9 +52,7 @@ function Appointments() {
         <FlatList
           className="min-h-full w-full"
           directionalLockEnabled
-          data={appointments.filter(
-            (appointment) => appointment.status === "CREATED",
-          )}
+          data={appointments}
           renderItem={({ item }) => <AppointmentCell appointment={item} />}
           keyExtractor={(item) => item._id.toString()}
           ItemSeparatorComponent={ItemSeperator}

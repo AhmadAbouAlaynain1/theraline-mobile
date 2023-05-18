@@ -1,5 +1,5 @@
 import React from "react";
-import { TextInput, Image, SafeAreaView } from "react-native";
+import { TextInput, SafeAreaView } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import GroupChat from "./GroupChat";
