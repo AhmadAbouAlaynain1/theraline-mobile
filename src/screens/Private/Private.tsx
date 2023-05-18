@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AllPrivate from "./AllPrivate";
 import PrivateChat from "./PrivateChat";
+import LogoutImage from "../../components/general/LogoutImage";
 
 const PrivateStack = createNativeStackNavigator();
 
@@ -24,15 +25,7 @@ function Header({ search, setSearch, insets }: any) {
           borderRadius: 10,
         }}
       />
-      <Image
-        className="h-12 w-12"
-        style={{
-          borderRadius: 50,
-        }}
-        source={{
-          uri: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
-        }}
-      />
+      <LogoutImage />
     </SafeAreaView>
   );
 }

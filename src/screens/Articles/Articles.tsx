@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AllArticles from "./AllArticles";
 import Article from "./Article";
+import LogoutImage from "../../components/general/LogoutImage";
 
 const ArticlesStack = createNativeStackNavigator();
 
@@ -18,21 +19,15 @@ function Header({ insets, search, setSearch }: any) {
       <TextInput
         placeholder="Search..."
         value={search}
-        onChangeText={(text) => setSearch(text)}
+        onChangeText={(text) => {
+          setSearch(text);
+        }}
         className="w-[80%] border-gray-100 bg-white p-4 shadow-lg "
         style={{
           borderRadius: 10,
         }}
       />
-      <Image
-        className="h-12 w-12"
-        style={{
-          borderRadius: 50,
-        }}
-        source={{
-          uri: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
-        }}
-      />
+      <LogoutImage />
     </SafeAreaView>
   );
 }

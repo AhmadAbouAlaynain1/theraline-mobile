@@ -5,7 +5,7 @@ import { useGetArticles } from "../../hooks/queries/articles/useGetArticles";
 
 function AllArticles({ navigation }: any) {
   const {
-    data: articles,
+    data: articlesData,
     isLoading: articlesLoading,
     isError: articleError,
   } = useGetArticles();
@@ -26,14 +26,12 @@ function AllArticles({ navigation }: any) {
     );
   }
 
-  console.log(articles);
-
   return (
     <View className="mx-4 mt-4 flex  flex-1">
       <View className="flex flex-col gap-6">
         <FlatList
           directionalLockEnabled
-          data={articles}
+          data={articlesData}
           renderItem={({ item }) => (
             <ArticleItem item={item} navigation={navigation} />
           )}
