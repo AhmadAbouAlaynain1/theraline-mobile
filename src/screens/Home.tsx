@@ -1,10 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, FontAwesome, MaterialIcons } from "@expo/vector-icons";
-import Private from "./Private/Private";
-import Articles from "./Articles/Articles";
-import Groups from "./Groups/Groups";
-import Appointments from "./Appoitnment/Appointments";
+import Private from "./private/Private";
+import Articles from "./articles/Articles";
+import Groups from "./groups/Groups";
+import Appointments from "./appoitnment/Appointments";
 
 function TabBarIcon({ color, size, route }: any) {
   if (route.name === "groups") {

@@ -27,6 +27,12 @@
     "no-console": "off",
     "import/no-extraneous-dependencies": "off",
     "tailwindcss/no-custom-classname": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }

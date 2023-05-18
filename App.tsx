@@ -12,8 +12,8 @@ import { useAppState } from "./src/hooks/queries/AppQuery/useAppState";
 import { useOnlineManager } from "./src/hooks/queries/AppQuery/useOnlineManager";
 
 import { useNotification } from "./src/hooks/notifications/useNotification";
-import Signin from "./src/screens/Auth/Signin";
-import Signup from "./src/screens/Auth/Signup";
+import Signin from "./src/screens/auth/Signin";
+import Signup from "./src/screens/auth/Signup";
 import useAuthStore from "./src/hooks/stores/useAuthStore";
 import Home from "./src/screens/Home";
 
