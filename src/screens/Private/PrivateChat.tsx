@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import {
   KeyboardAvoidingView,
@@ -9,6 +10,7 @@ import {
   FlatList,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { format } from "date-fns";
 import useGetMessages from "../../hooks/queries/chats/useGetMessages";
 import { useSendMessage } from "../../hooks/mutations/groups/useSendMessage";
 
@@ -88,25 +90,22 @@ function PrivateChat({ route, navigation }: any) {
                 {!item.sentByMe && (
                   <Text className="font-bold text-white">{item.username}</Text>
                 )}
-                <View className="flex-row">
+                <View>
                   <Text
-                    className={`w-6/12 ${
+                    className={`w-12/12 ${
                       item.sentByMe ? "text-black" : "text-white"
                     }`}>
                     {item.text}
                   </Text>
                   <Text
+                    style={{ textAlign: "right" }}
                     className={`${item.sentByMe && "text-right"} font-light ${
                       item.sentByMe ? "text-black" : "text-white"
-                    } mt-auto w-6/12`}>
+                    } `}>
                     {item.send_at
-                      ? new Date(item.send_at).toLocaleString("en-US", {
-                          hour: "numeric",
-                          minute: "numeric",
-                          hour12: true,
-                          day: "numeric",
-                          month: "short",
-                        })
+                      ? new Date(item.send_at).toDateString()
+                        ? format(new Date(item.send_at), "p")
+                        : format(new Date(item.send_at), "PP")
                       : ""}
                   </Text>
                 </View>

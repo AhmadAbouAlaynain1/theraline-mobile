@@ -1,5 +1,7 @@
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import { Image, View, Text, Pressable } from "react-native";
+import { format } from "date-fns";
 import { Chat } from "../../hooks/queries/chats/useGetChats";
 
 function PrivateCell({ chat, navigation }: { chat: Chat; navigation: any }) {
@@ -8,6 +10,7 @@ function PrivateCell({ chat, navigation }: { chat: Chat; navigation: any }) {
     chatId: chat._id,
     chatName: chat.name,
   };
+
   return (
     <Pressable
       className="flex h-28 w-full flex-row justify-start  bg-white p-4 "
@@ -48,11 +51,9 @@ function PrivateCell({ chat, navigation }: { chat: Chat; navigation: any }) {
       <View className="ml-auto flex flex-col items-center ">
         <Text className="text-center text-gray-400">
           {chat.latestMessage?.send_at
-            ? new Date(chat.latestMessage.send_at).toLocaleString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-                hour12: true,
-              })
+            ? new Date(chat.latestMessage.send_at).toDateString()
+              ? format(new Date(chat.latestMessage.send_at), "p")
+              : format(new Date(chat.latestMessage.send_at), "PP")
             : ""}
         </Text>
       </View>

@@ -27,13 +27,16 @@ function ArticleItem({ item, navigation }: ArticleItemProps) {
         <View className="flex flex-col ">
           <Text className="text-xl font-bold ">{item.title}</Text>
         </View>
-
-        <Text className="text-xl text-gray-500">
+      </View>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={{ textAlign: "left" }} className="text-base text-gray-500">
+          By: {item.author.name}
+        </Text>
+        <Text
+          style={{ textAlign: "right" }}
+          className="text-base text-gray-500">
           {new Date(item.date).toLocaleDateString()}
         </Text>
-      </View>
-      <View>
-        <Text className="text-base text-gray-500 ">By: {item.author.name}</Text>
       </View>
     </Pressable>
   );

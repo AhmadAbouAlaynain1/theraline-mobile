@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
+import { format } from "date-fns";
 import useAuthStore from "../../hooks/stores/useAuthStore";
 import Button from "../buttons/Button";
 import { useConfirmAppointment } from "../../hooks/mutations/appointment/useConfirmAppointment";
@@ -15,17 +16,35 @@ function AppointmentCell({ appointment }: { appointment: any }) {
     useRejectAppointment();
   console.log(user);
   return (
-    <View className="rounded-2xl bg-white p-6 shadow-2xl">
+    <ScrollView className="rounded-2xl bg-white p-6 shadow-2xl">
       {user === "DOCTOR" ? (
         <View className="flex flex-col gap-4">
           <View className=" flex flex-row justify-between">
-            <Text className="text-xl font-bold">Appointment</Text>
+            <Text className="text-xl font-bold">{appointment.title}</Text>
             <Text className="text-base text-gray-600">
               {appointment.start_date.split("T")[0]}
             </Text>
           </View>
-          <Text className="mb-6 w-full text-base text-gray-600">
+          <Text className="text-base text-gray-600">
             Patient Name: {appointment.patient.fullName}
+          </Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            <Text className="text-base text-gray-600">
+              Starts:{" "}
+              {new Date(appointment.start_date).toDateString()
+                ? format(new Date(appointment.start_date), "p")
+                : format(new Date(appointment.start_date), "PP")}
+            </Text>
+            <Text className="text-base text-gray-600">
+              Ends:{" "}
+              {new Date(appointment.end_date).toDateString()
+                ? format(new Date(appointment.end_date), "p")
+                : format(new Date(appointment.end_date), "PP")}
+            </Text>
+          </View>
+          <Text className="mb-6 w-full text-base text-gray-600">
+            Status: {appointment.status}
           </Text>
         </View>
       ) : (
@@ -66,7 +85,7 @@ function AppointmentCell({ appointment }: { appointment: any }) {
           </View>
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
 
