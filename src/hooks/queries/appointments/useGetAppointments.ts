@@ -20,7 +20,14 @@ const getAppointments = (): Promise<
 export const useGetAppointments = () => {
   return useQuery({
     queryKey: ["appointments"],
-    select: (data) => data.data.docs,
+    select: (data) => {
+      // Return by most recent date
+      return data.data.docs
+        .sort((a, b) => {
+          return Number(b.start_date) - Number(a.start_date);
+        })
+        .reverse();
+    },
     queryFn: getAppointments,
     refetchInterval: 2000,
   });
